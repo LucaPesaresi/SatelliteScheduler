@@ -1,0 +1,15 @@
+﻿RICHIESTE
+mettere insieme delle acquisizioni che non siano in conflitto:
+1) ogni AR non deve avere più di un DTO
+2) non ci siano overlap temporali ( no 2 DTO che hanno un pezzo in contemporanea)
+3) non superare il memory gap
+
+funzione che stampa la qualità del piano 
+(sommando la priorità dei rank serviti e conteggio delle acquisizione del piano )
+
+------------------------------------------------------------------
+
+1) si rimuovono i duplicati ar_id con un criterio di scelta casuale
+2) si unificano le AR con i DTO
+
+

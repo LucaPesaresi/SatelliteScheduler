@@ -1,17 +1,25 @@
-﻿public class JsonCaster
+﻿using System;
+using System.Collections.Generic;
+
+public class JsonCaster
 {
     public class AR
     {
         public int id { get; set; }
         public int rank { get; set; }
         public bool highPriority { get; set; }
+
+        public static implicit operator List<object>(AR v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class DTO
     {
         public int id { get; set; }
         public int ar_id { get; set; }
-        public double Start_time { get; set; }
+        public double start_time { get; set; }
         public double stop_time { get; set; }
         public double memory { get; set; }
         public double roll { get; set; }
