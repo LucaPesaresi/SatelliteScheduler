@@ -96,7 +96,7 @@ public class JsonCaster
 
         public void PrintAll()
         {
-            Console.WriteLine(id_ar + " " + id_dto + " " + rank + " " + highPriority + " " + start_time + " " + stop_time + " " + memory);
+            Console.WriteLine(id_ar + "\t" + id_dto + "\t" + rank + "\t" + highPriority + "\t" + start_time + "\t" + stop_time + "\t" + memory);
         }
     }
 }
