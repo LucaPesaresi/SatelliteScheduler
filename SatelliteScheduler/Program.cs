@@ -67,8 +67,11 @@ namespace SatelliteScheduler
 
             double rank_mean = plan.Select(x => x.rank).Average();
 
+            double mem = plan.Select(x => x.memory).Sum();
+
             Console.WriteLine("Acquisizioni: "+ plan.Count);
             Console.WriteLine("Rank medio: " + rank_mean);
+            Console.WriteLine("Memoria usata: " + mem + " su " + memoryMax);
         }
 
         //private static bool isDuplicated(DTO dto, List<DTO> list)
@@ -94,10 +97,19 @@ namespace SatelliteScheduler
             double current_mem = 0;
 
             var rnd = new Random();
-            List<int> randomNumbers = Enumerable.Range(0, max).OrderBy(x => rnd.Next())/*.Take(n)*/.ToList();
+            //List<int> randomNumbers = Enumerable.Range(0, max).OrderBy(x => rnd.Next())/*.Take(n)*/.ToList();
 
+            //lista ordinata per ordine: casuale, memoria minore, rank maggiore
+            List<ARDTO> ardto_ordered = ardto.OrderBy(x => rnd.Next()).ToList();
+            //List<ARDTO> ardto_ordered = ardto.OrderBy(d => d.memory).ToList();
+            //List<ARDTO> ardto_ordered = ardto.OrderByDescending(d => d.rank).ToList();
+
+            //lista finale del piano
             List<ARDTO> list = new List<ARDTO>(/*n*/);
-            list.Add(ardto[randomNumbers[0]]);
+
+            //list.Add(ardto[randomNumbers[0]]);
+            list.Add(ardto_ordered[0]);
+            current_mem += list[0].memory;
 
             int i;
             for (i = 1; i < max && !full; i++)
@@ -107,26 +119,26 @@ namespace SatelliteScheduler
                 for (j=0; j < list.Count && ok; j++)
                 {
                     //controllo che l'id_ar non sia già presente in quelli aggiunti
-                    if (ardto[randomNumbers[i]].id_ar == list[j].id_ar)
+                    if (ardto_ordered[i].id_ar == list[j].id_ar)
                     {
                         // vai al successivo
                         i++;
                         ok = false;
                     }
                     //controllo che non ci sia un overlap temporale con i precedenti
-                    if (!(ardto[randomNumbers[i]].stop_time < list[j].start_time || 
-                        ardto[randomNumbers[i]].start_time > list[j].stop_time))
+                    if (ardto_ordered[i].stop_time >= list[j].start_time ||
+                        ardto_ordered[i].start_time <= list[j].stop_time)
                     {
                         i++;
                         ok = false;
                     }
                 }
                 //controllo memoria libera
-                if (current_mem + ardto[randomNumbers[i]].memory <= memoryMax)
+                if (current_mem + ardto_ordered[i].memory <= memoryMax)
                 {
-                    Console.WriteLine(i);
-                    list.Add(ardto[randomNumbers[i]]);
-                    current_mem += ardto[randomNumbers[i]].memory;
+                    ardto_ordered[i].PrintAll();
+                    list.Add(ardto_ordered[i]);
+                    current_mem += ardto_ordered[i].memory;
                 }
                 else
                 {

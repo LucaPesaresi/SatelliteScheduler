@@ -93,5 +93,10 @@ public class JsonCaster
                 memory = dto.memory;
             }
         }
+
+        public void PrintAll()
+        {
+            Console.WriteLine(id_ar + " " + id_dto + " " + rank + " " + highPriority + " " + start_time + " " + stop_time + " " + memory);
+        }
     }
 }
