@@ -7,11 +7,15 @@
 
   <ItemGroup>
     <None Remove="day1_0\ARs.json" />
+    <None Remove="day1_0\constants.json" />
     <None Remove="day1_0\DTOs.json" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="day1_0\ARs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_0\constants.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="day1_0\DTOs.json">

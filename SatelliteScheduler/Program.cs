@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Newtonsoft.Json;
 using static JsonCaster;
 
@@ -8,13 +9,22 @@ namespace SatelliteScheduler
 {
     class Program
     {
+        static double memoryMax;
+
         static void Main(string[] args)
         {
             string ars = System.IO.File.ReadAllText(@"day1_0/ARs.json");
             string dtos = System.IO.File.ReadAllText(@"day1_0/DTOs.json");
+            string consts = System.IO.File.ReadAllText(@"day1_0/constants.json");
 
             List<AR> ARlist = JsonConvert.DeserializeObject<List<AR>>(ars);
             List<DTO> DTOlist = JsonConvert.DeserializeObject<List<DTO>>(dtos);
+            Costants constlist = JsonConvert.DeserializeObject<Costants>(consts);
+
+            //List<DTO> DTOlist1 = new List<DTO>();
+            //DTOlist1.Add(DTOlist[0]);
+
+            memoryMax = constlist.MEMORY_CAP;
 
             //Si eseguono dei test sui dati per capire i vincoli
 
@@ -24,63 +34,106 @@ namespace SatelliteScheduler
               .ToList();
 
             var dto_distinti = DTOlist.GroupBy(x => x.ar_id)
-                .Select(y => y.ToList().OrderBy(m => m.memory).First())
+                .Select(y => y.OrderBy(m => m.memory).FirstOrDefault())
                 .ToList();
 
-            //non funziona l'OR e non filtra gli overlap temporali
-            var dto_no_overlap = dto_distinti
-                .Where(y => dto_distinti
-                    .Any(x => x.stop_time < y.start_time || x.start_time > y.stop_time))
+            var dto_distinti2 = DTOlist.GroupBy(x => x.ar_id, (_, g) =>
+                g.OrderByDescending(m => m.memory).FirstOrDefault())
                 .ToList();
 
-            //non funzionano gli operatori OR-AND e non filtra gli overlap temporali
-            var dto_no_overlap2 = dto_distinti
-                .Where(y => !dto_distinti
-                    .Any(x => (x.start_time > y.start_time && x.start_time < y.stop_time) || (x.stop_time > y.start_time && x.stop_time < y.stop_time)))
-                .ToList();
+            //double sum = 0;
+            //dto_distinti2.ForEach(d =>
+            //{
+            //    sum += d.memory;
+            //});
 
+            //var dto_no_overlap1 = DTOlist
+            //    .Where(y => DTOlist
+            //        .Any(x => x.stop_time < y.start_time))
+            //    .Where(y => DTOlist
+            //        .Any(x => x.start_time > y.stop_time))
+            //    .ToList();
 
-            //CreatePlan(ARlist, DTOList);     
+            //merge AR con DTO
+            List<ARDTO> ar_dto = new List<ARDTO>();
+            DTOlist.ForEach(d =>
+            {
+                ARDTO ardto = new ARDTO(ARlist.Find(a => a.id == d.ar_id), d);
+                ar_dto.Add(ardto);
+            });
 
-            Console.WriteLine(ARlist[0].id + " " + DTOlist[0].id);
+            //creazione di un piano di acquisizioni
+            List<ARDTO> plan = CreatePlan(ar_dto);
 
+            double rank_mean = plan.Select(x => x.rank).Average();
+
+            Console.WriteLine("Acquisizioni: "+ plan.Count);
+            Console.WriteLine("Rank medio: " + rank_mean);
         }
 
-
-        //private static void CreatePlan(List<AR> ARlist, List<DTO> DTOList)
+        //private static bool isDuplicated(DTO dto, List<DTO> list)
         //{
-        //    int n = 500;
-        //    int max = ARlist.Count;
-        //    bool duplicato = false;
-
-        //    var rnd = new Random();
-        //    List<int> randomNumbers = Enumerable.Range(0, max).OrderBy(x => rnd.Next()).Take(n).ToList();
-        //    List<AR> ARlim = new List<AR>(n);
-
-        //    int i;
-        //    for (i = 0;  i < ARlist.Count; i++)
+        //    foreach (DTO d in list)
         //    {
-        //        //controllo che l'id_ar dto non sia già presente in quelli aggiunti
-        //        int j = 0;
-        //        do
+        //        if (d.ar_id == dto.ar_id)
         //        {
-        //            duplicato = true;
+        //            return true;
         //        }
-        //        while (ARlim[j].id != DTOList[randomNumbers[i]].ar_id && j < ARlim.Count);
-
-
-        //        if (ARlist[i].id != DTOList[randomNumbers[i]].ar_id)
-        //        {
-                    
-        //        }
-        //        else
-        //        {
-
-        //        }
-        //        ARlim.Add(ARlist[randomNumbers[i]]);
-        //    }            
-
-        //    int a = 2;
+        //    }
+        //    return false;
         //}
+
+        //Creazione di un piano con una lista randomizzata
+
+        private static List<ARDTO> CreatePlan(List<ARDTO> ardto)
+        {
+            //int n = 500;
+            int max = ardto.Count;
+            bool ok = true;
+            bool full = false;
+            double current_mem = 0;
+
+            var rnd = new Random();
+            List<int> randomNumbers = Enumerable.Range(0, max).OrderBy(x => rnd.Next())/*.Take(n)*/.ToList();
+
+            List<ARDTO> list = new List<ARDTO>(/*n*/);
+            list.Add(ardto[randomNumbers[0]]);
+
+            int i;
+            for (i = 1; i < max && !full; i++)
+            {
+                ok = true;
+                int j = 0;
+                for (j=0; j < list.Count && ok; j++)
+                {
+                    //controllo che l'id_ar non sia già presente in quelli aggiunti
+                    if (ardto[randomNumbers[i]].id_ar == list[j].id_ar)
+                    {
+                        // vai al successivo
+                        i++;
+                        ok = false;
+                    }
+                    //controllo che non ci sia un overlap temporale con i precedenti
+                    if (!(ardto[randomNumbers[i]].stop_time < list[j].start_time || 
+                        ardto[randomNumbers[i]].start_time > list[j].stop_time))
+                    {
+                        i++;
+                        ok = false;
+                    }
+                }
+                //controllo memoria libera
+                if (current_mem + ardto[randomNumbers[i]].memory <= memoryMax)
+                {
+                    Console.WriteLine(i);
+                    list.Add(ardto[randomNumbers[i]]);
+                    current_mem += ardto[randomNumbers[i]].memory;
+                }
+                else
+                {
+                    full = true;
+                }
+            }
+            return list;
+        }
     }
 }
