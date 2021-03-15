@@ -9,7 +9,8 @@ funzione che stampa la qualità del piano
 
 ------------------------------------------------------------------
 
-1) si rimuovono i duplicati ar_id con un criterio di scelta casuale
-2) si unificano le AR con i DTO
+- iterare i 3 piani e confrontare con il migliore (quello dei rank)
+- implementare una funzione di disturbo randomizzata sul rank
+
 
 

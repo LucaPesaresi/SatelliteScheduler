@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public class JsonCaster
 {
@@ -82,16 +83,13 @@ public class JsonCaster
 
         public ARDTO(AR ar, DTO dto)
         {
-            if (ar.id == dto.ar_id)
-            {
-                id_ar = ar.id;
-                id_dto = dto.id;
-                rank = ar.rank;
-                highPriority = ar.highPriority;
-                start_time = dto.start_time;
-                stop_time = dto.stop_time;
-                memory = dto.memory;
-            }
+            id_ar = ar.id;
+            id_dto = dto.id;
+            rank = ar.rank;
+            highPriority = ar.highPriority;
+            start_time = dto.start_time;
+            stop_time = dto.stop_time;
+            memory = dto.memory;
         }
 
         public void PrintAll()

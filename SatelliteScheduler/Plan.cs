@@ -7,23 +7,19 @@ namespace SatelliteScheduler
 {
     public class Plan
     {
-        static List<ARDTO> plan;
-        static double max_memory;
-
-        public Plan(List<ARDTO> ardto, double memoryMax)
+        List<ARDTO> plan;
+       
+        public Plan(List<ARDTO> ardto)
         {
-            max_memory = memoryMax;
             plan = new List<ARDTO>();
             CreatePlan(ardto);
-            QualityPlan();
         }
 
         //Creazione di un piano con una lista randomizzata
-        public static void CreatePlan(List<ARDTO> ardto)
+        public void CreatePlan(List<ARDTO> ardto)
         { 
             int max = ardto.Count;
             bool ok; //indica se i vincoli sono rispettati
-            bool full = false; //memoria piena
             double current_mem = 0; // memoria attuale
 
             plan.Add(ardto[0]);
@@ -33,64 +29,68 @@ namespace SatelliteScheduler
             //Console.WriteLine("id_ar\t\tid_dto\t\trank\thigh\tstart\t\t\tstop\t\t\tmemory");
 
             int i;
-            for (i = 1; i < max && !full; i++)
+            for (i = 1; i < max; i++)
             {
                 ok = true;
-                int j = 0;
-                for (j = 0; j < plan.Count && ok; j++)
+                int j;
+                for (j = 0; j < plan.Count; j++)
                 {
                     //controllo che non ci sia un overlap temporale con i precedenti
-                    if (ardto[i].stop_time >= plan[j].start_time ||
+                    if (ardto[i].stop_time >= plan[j].start_time &&
                         ardto[i].start_time <= plan[j].stop_time)
                     {
-                        i++;
                         ok = false;
+                        break;
                     }
                     //controllo che l'id_ar non sia già presente in quelli aggiunti
                     if (ardto[i].id_ar == plan[j].id_ar)
                     {
-                        //se sono uguali ma il nuovo è migliore viene scambiato con il precedente
-                        //migliore inteso come: minor tempo di acquisizione e minor memoria
-                        double new_lap = ardto[i].stop_time - ardto[i].start_time;
-                        double old_lap = plan[j].stop_time - plan[j].start_time;
-
-                        if (ardto[i].memory < plan[j].memory &&
-                            new_lap < old_lap && ok)
-                        {
-                            current_mem -= plan[j].memory;
-                            current_mem += ardto[i].memory;
-                            plan.RemoveAt(j);
-                        }
-                        else
-                        {
-                            i++;
-                            ok = false;
-                        }
+                        ok = false;
+                        break;
                     }
                 }
-                //controllo memoria libera
-                if (current_mem + ardto[i].memory <= max_memory)
+                if (ok)
                 {
-                    //ardto[i].PrintAll();
-                    plan.Add(ardto[i]);
-                    current_mem += ardto[i].memory;
-                }
-                else
-                {
-                    full = true;
+                    //controllo memoria libera
+                    if (current_mem + ardto[i].memory <= Program.max_mem)
+                    {
+                        //ardto[i].PrintAll();
+                        plan.Add(ardto[i]);
+                        current_mem += ardto[i].memory;
+                    }
                 }
             }
         }
 
-        //Stampa le qualità del piano in temrini di rank medio e numero acquisizioni
-        private static void QualityPlan()
+        // Restituisce una qualità del piano in temrini di  numero di acquisizioni, 
+        // rank totale e memoria occupata
+        public Quality QualityPlan()
         {
-            double rank_mean = plan.Select(x => x.rank).Average();
+            double rank = plan.Select(x => x.rank).Sum();
             double mem = plan.Select(x => x.memory).Sum();
-
-            Console.WriteLine("\nAcquisizioni: " + plan.Count);
-            Console.WriteLine("Rank medio: " + rank_mean);
-            Console.WriteLine("Memoria usata: " + mem + " su " + max_memory);
+            return new Quality(plan.Count, rank, mem);
         }
+    }
+
+    public class Quality
+    {
+        public int n_ar { get; set; }
+        public double tot_rank { get; set; }
+        public double memory { get; set; }
+
+        public Quality(int n_ar, double tot_rank, double memory)
+        {
+            this.n_ar = n_ar;
+            this.tot_rank = tot_rank;
+            this.memory = memory;
+        }
+
+        public void PrintQuality()
+        {
+            Console.WriteLine("\nAcquisizioni: " + n_ar);
+            Console.WriteLine("Rank: " + tot_rank);
+            Console.WriteLine("Memoria usata: " + memory + " su " + Program.max_mem);
+        }
+
     }
 }

@@ -8,6 +8,7 @@ namespace SatelliteScheduler
 {
     class Program
     {
+        public static double max_mem;
         static void Main(string[] args)
         {
             string ars = System.IO.File.ReadAllText(@"day1_0/ARs.json");
@@ -18,11 +19,9 @@ namespace SatelliteScheduler
             List<DTO> DTOlist = JsonConvert.DeserializeObject<List<DTO>>(dtos);
             Costants constlist = JsonConvert.DeserializeObject<Costants>(consts);
 
-            //List<DTO> DTOlist1 = new List<DTO>();
-            //DTOlist1.Add(DTOlist[0]);
+            max_mem = constlist.MEMORY_CAP;
 
             //Si eseguono dei test sui dati per capire i vincoli
-
             var dto_duplicati = DTOlist.GroupBy(x => x.ar_id)
               .Where(g => g.Count() > 1)
               .Select(y => new { Element = y.Key, Counter = y.Count() })
@@ -36,18 +35,6 @@ namespace SatelliteScheduler
                 g.OrderByDescending(m => m.memory).FirstOrDefault())
                 .ToList();
 
-            //double sum = 0;
-            //dto_distinti2.ForEach(d =>
-            //{
-            //    sum += d.memory;
-            //});
-
-            //var dto_no_overlap1 = DTOlist
-            //    .Where(y => DTOlist
-            //        .Any(x => x.stop_time < y.start_time))
-            //    .Where(y => DTOlist
-            //        .Any(x => x.start_time > y.stop_time))
-            //    .ToList();
 
             //merge AR con DTO
             List<ARDTO> ar_dto = new List<ARDTO>();
@@ -57,16 +44,61 @@ namespace SatelliteScheduler
                 ar_dto.Add(ardto);
             });
 
-            //Lista ordinata per ordine: casuale, memoria minore, rank maggiore
-            List<ARDTO> ardto_rnd = ar_dto.OrderBy(x => new Random().Next()).ToList();
-            Plan plan_rnd = new Plan(ardto_rnd, constlist.MEMORY_CAP);
 
-            List<ARDTO> ardto_memory = ar_dto.OrderBy(d => d.memory).ToList();
-            Plan plan_memory = new Plan(ardto_memory, constlist.MEMORY_CAP);
+            //lista ordinata per ordine di: memoria meggiore, rank maggiore, casuale, casuale con disturbo
+            Console.WriteLine("Test Piano in ordine di memoria");
+            List<ARDTO> ardto_memory = ar_dto.OrderByDescending(d => d.memory).ToList();
+            Plan plan_memory = new Plan(ardto_memory);
+            plan_memory.QualityPlan().PrintQuality();
 
+            Console.WriteLine("\nTest Piano in ordine di rank");
             List<ARDTO> ardto_rank = ar_dto.OrderByDescending(d => d.rank).ToList();
-            Plan plan_rank = new Plan(ardto_rank, constlist.MEMORY_CAP);
+            Plan plan_rank = new Plan(ardto_rank);
+            plan_rank.QualityPlan().PrintQuality();
 
+            Console.WriteLine("\nTest piano randomizzato");
+            TestPlan(ar_dto);
+
+            Console.WriteLine("\nTest piano randomizzato e disturbato");
+            TestPlan(AddNoise(ar_dto));
+        }
+
+        public static void TestPlan(List<ARDTO> ar_dto)
+        {
+            List<Quality> qlist = new List<Quality>();
+            for (int i = 0; i < 1000; i++)
+            {
+                List<ARDTO> ardto_rnd = ar_dto.OrderBy(x => new Random().Next()).ToList();
+                Plan plan_rnd = new Plan(ardto_rnd);
+                qlist.Add(plan_rnd.QualityPlan());
+            }
+            Quality q = qlist.OrderByDescending(d => d.tot_rank).First();
+            q.PrintQuality();
+        }
+
+        public static List<ARDTO> AddNoise(List<ARDTO> ardto)
+        {
+            List<ARDTO> clean = ardto;
+            ardto.ForEach(a =>
+            {
+                int value_noise = new Random().Next(0, 5);
+                int isToNoise = new Random().Next(0, 10);
+                int addOrSub = new Random().Next(0, 10);
+
+                if (isToNoise >= 5)
+                {
+                    if (addOrSub >= 5)
+                    {
+                        a.rank += value_noise;
+                    }
+                    else
+                    {
+                        a.rank -= value_noise;
+                    }
+                }
+            });
+
+            return ardto;
         }
     }
 }
