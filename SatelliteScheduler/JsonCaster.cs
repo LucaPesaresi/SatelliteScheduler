@@ -75,7 +75,7 @@ public class JsonCaster
     {
         public int id_ar { get; set; }
         public int id_dto { get; set; }
-        public int rank { get; set; }
+        public double rank { get; set; }
         public bool highPriority { get; set; }
         public double start_time { get; set; }
         public double stop_time { get; set; }

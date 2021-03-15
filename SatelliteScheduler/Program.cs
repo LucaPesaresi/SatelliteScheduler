@@ -58,24 +58,25 @@ namespace SatelliteScheduler
 
             int max_it = 100;
             Console.WriteLine("\nTest piano randomizzato");
-            TestPlan(ar_dto, max_it);
+            TestPlan(ar_dto, d => new Random().Next(), max_it);
 
 
             for (int noise = 1; noise < 10; noise+=2)
             {
                 Console.WriteLine("\nTest piano randomizzato con disturbo " + noise);
-                TestPlan(AddNoise(ar_dto, noise), max_it);
+                TestPlan(AddNoise(ar_dto, noise), d => d.rank, max_it);
             }
 
             //Console.ReadLine();
         }
 
-        public static void TestPlan(List<ARDTO> ar_dto, int max_it=100)
+        public static void TestPlan(List<ARDTO> ar_dto, Func<ARDTO,object> keySelector, int max_it = 100)
         {
             List<Quality> qlist = new List<Quality>();
             for (int i = 0; i < max_it; i++)
             {
-                List<ARDTO> ardto_rnd = ar_dto.OrderBy(x => new Random().Next()).ToList();
+                List<ARDTO> ardto_rnd = ar_dto.OrderByDescending(keySelector)
+                    .ThenByDescending(x => x.memory).ToList();
                 Plan plan_rnd = new Plan(ardto_rnd);
                 qlist.Add(plan_rnd.QualityPlan());
             }
@@ -83,26 +84,20 @@ namespace SatelliteScheduler
             q.PrintQuality();
         }
 
-        public static List<ARDTO> AddNoise(List<ARDTO> ardto, int noise)
+        // Aggiunge un rumore compreso tra -max_noise e max_noise
+        public static List<ARDTO> AddNoise(List<ARDTO> ardto, int max_noise)
         {
-            ardto.ForEach(a =>
+            foreach (ARDTO a in ardto)
             {
-                int value_noise = new Random().Next(0, 5);
-                int isToNoise = new Random().Next(0, 10);
-                int addOrSub = new Random().Next(0, 10);
+                double value_noise = Math.Round((new Random().NextDouble() * 2 * max_noise) - max_noise, 2);
 
-                if (isToNoise >= noise)
+                int isToNoise = new Random().Next(0, 10);
+
+                if (isToNoise >= max_noise)
                 {
-                    if (addOrSub >= noise)
-                    {
-                        a.rank += value_noise;
-                    }
-                    else
-                    {
-                        a.rank -= value_noise;
-                    }
+                    a.rank += value_noise;
                 }
-            });
+            }
 
             return ardto;
         }
