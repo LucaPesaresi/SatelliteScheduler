@@ -56,17 +56,24 @@ namespace SatelliteScheduler
             Plan plan_rank = new Plan(ardto_rank);
             plan_rank.QualityPlan().PrintQuality();
 
+            int max_it = 100;
             Console.WriteLine("\nTest piano randomizzato");
-            TestPlan(ar_dto);
+            TestPlan(ar_dto, max_it);
 
-            Console.WriteLine("\nTest piano randomizzato e disturbato");
-            TestPlan(AddNoise(ar_dto));
+
+            for (int noise = 1; noise < 10; noise+=2)
+            {
+                Console.WriteLine("\nTest piano randomizzato con disturbo " + noise);
+                TestPlan(AddNoise(ar_dto, noise), max_it);
+            }
+
+            //Console.ReadLine();
         }
 
-        public static void TestPlan(List<ARDTO> ar_dto)
+        public static void TestPlan(List<ARDTO> ar_dto, int max_it=100)
         {
             List<Quality> qlist = new List<Quality>();
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < max_it; i++)
             {
                 List<ARDTO> ardto_rnd = ar_dto.OrderBy(x => new Random().Next()).ToList();
                 Plan plan_rnd = new Plan(ardto_rnd);
@@ -76,18 +83,17 @@ namespace SatelliteScheduler
             q.PrintQuality();
         }
 
-        public static List<ARDTO> AddNoise(List<ARDTO> ardto)
+        public static List<ARDTO> AddNoise(List<ARDTO> ardto, int noise)
         {
-            List<ARDTO> clean = ardto;
             ardto.ForEach(a =>
             {
                 int value_noise = new Random().Next(0, 5);
                 int isToNoise = new Random().Next(0, 10);
                 int addOrSub = new Random().Next(0, 10);
 
-                if (isToNoise >= 5)
+                if (isToNoise >= noise)
                 {
-                    if (addOrSub >= 5)
+                    if (addOrSub >= noise)
                     {
                         a.rank += value_noise;
                     }

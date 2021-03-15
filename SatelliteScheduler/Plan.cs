@@ -67,7 +67,7 @@ namespace SatelliteScheduler
         public Quality QualityPlan()
         {
             double rank = plan.Select(x => x.rank).Sum();
-            double mem = plan.Select(x => x.memory).Sum();
+            double mem = Math.Round(plan.Select(x => x.memory).Sum(), 2);
             return new Quality(plan.Count, rank, mem);
         }
     }
@@ -87,10 +87,9 @@ namespace SatelliteScheduler
 
         public void PrintQuality()
         {
-            Console.WriteLine("\nAcquisizioni: " + n_ar);
+            Console.WriteLine("Acquisizioni: " + n_ar);
             Console.WriteLine("Rank: " + tot_rank);
-            Console.WriteLine("Memoria usata: " + memory + " su " + Program.max_mem);
+            Console.WriteLine("Memoria usata: " + memory + " su " + Program.max_mem + " GB");
         }
-
     }
 }
