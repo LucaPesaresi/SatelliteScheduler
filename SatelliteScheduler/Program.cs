@@ -9,6 +9,7 @@ namespace SatelliteScheduler
     class Program
     {
         public static double max_mem;
+        public static double max_rank;
         static void Main(string[] args)
         {
             string ars = System.IO.File.ReadAllText(@"day1_0/ARs.json");
@@ -52,24 +53,27 @@ namespace SatelliteScheduler
             plan_memory.QualityPlan().PrintQuality();
 
             Console.WriteLine("\nTest Piano in ordine di rank");
-            List<ARDTO> ardto_rank = ar_dto.OrderByDescending(d => d.rank).ToList();
+            List<ARDTO> ardto_rank = ar_dto.OrderByDescending(d => d.rank)
+                .ThenByDescending(m => m.memory).ToList();
             Plan plan_rank = new Plan(ardto_rank);
             plan_rank.QualityPlan().PrintQuality();
+            max_rank = ardto_rank.First().rank;
 
             int max_it = 100;
-            Console.WriteLine("\nTest piano randomizzato");
+
+            Console.WriteLine("\nTest piano con rumore " + 0);
             TestPlan(ar_dto, d => new Random().Next(), max_it);
 
-
-            for (int noise = 1; noise < 10; noise+=2)
+            for (int i = (int)max_rank / 4; i <= max_rank; i+=(int)max_rank/4)
             {
-                Console.WriteLine("\nTest piano randomizzato con disturbo " + noise);
-                TestPlan(AddNoise(ar_dto, noise), d => d.rank, max_it);
+                Console.WriteLine("\nTest piano con rumore " + i + "%");
+                TestPlan(AddNoise(ar_dto, i), d => new Random().Next(), max_it);
             }
 
             //Console.ReadLine();
         }
 
+        // Esegue un test di più piani per estrarre quella con qualità migliore
         public static void TestPlan(List<ARDTO> ar_dto, Func<ARDTO,object> keySelector, int max_it = 100)
         {
             List<Quality> qlist = new List<Quality>();
@@ -77,6 +81,7 @@ namespace SatelliteScheduler
             {
                 List<ARDTO> ardto_rnd = ar_dto.OrderByDescending(keySelector)
                     .ThenByDescending(x => x.memory).ToList();
+
                 Plan plan_rnd = new Plan(ardto_rnd);
                 qlist.Add(plan_rnd.QualityPlan());
             }
@@ -84,21 +89,20 @@ namespace SatelliteScheduler
             q.PrintQuality();
         }
 
-        // Aggiunge un rumore compreso tra -max_noise e max_noise
-        public static List<ARDTO> AddNoise(List<ARDTO> ardto, int max_noise)
+        // Aggiunge un rumore ad una quantità di dati e con una discreta scalabilità
+        public static List<ARDTO> AddNoise(List<ARDTO> ardto, int step_noise)
         {
             foreach (ARDTO a in ardto)
             {
-                double value_noise = Math.Round((new Random().NextDouble() * 2 * max_noise) - max_noise, 2);
-
-                int isToNoise = new Random().Next(0, 10);
-
-                if (isToNoise >= max_noise)
+                //prob che sia disturbato
+                int isToNoise = new Random().Next(0, 100);
+                if (isToNoise <= step_noise)
                 {
+                    //prob che +- del suo valore
+                    double value_noise = new Random().Next(-step_noise, step_noise);
                     a.rank += value_noise;
                 }
             }
-
             return ardto;
         }
     }
