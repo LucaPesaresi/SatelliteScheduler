@@ -76,7 +76,8 @@ namespace SatelliteScheduler
         public void Recreate(List<ARDTO> ardto, int step_noise)
         {
             double mem = best.QualityPlan().memory;
-            best.BuildPlan(AddNoise(ardto, step_noise), mem);
+            List<ARDTO> noisy_ardto = AddNoise(ardto, step_noise).OrderByDescending(d => d.noisy_rank / d.memory).ToList();
+            best.BuildPlan(noisy_ardto, mem);
         }
 
         public void Compare()
@@ -85,7 +86,7 @@ namespace SatelliteScheduler
             Quality q_star = best_star.QualityPlan();
 
             Console.WriteLine("-------------------------");
-            if (q_new.tot_rank / q_new.memory > q_star.tot_rank / q_star.memory)
+            if (q_new.tot_rank / q_new.memory * q_new.n_ar > q_star.tot_rank / q_star.memory * q_new.n_ar)
             {
                 best_star = best;
                 Console.WriteLine("\nIl nuovo piano risulta migliore");
