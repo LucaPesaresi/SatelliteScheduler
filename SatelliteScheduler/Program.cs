@@ -48,8 +48,19 @@ namespace SatelliteScheduler
             Plan plan_rankmem = new Plan(ardto_rankmem);
             plan_rankmem.QualityPlan().PrintQuality();
 
+            Console.WriteLine("\nTest Piano in ordine di rank/memoria disturbato");
             Solution S_rankmem = new Solution();
-            S_rankmem.TestNoisyPlan(ardto_rankmem, 400);
+            Solution S_star = new Solution();
+           
+            S_rankmem.CreateNoisyPlan(ardto_rankmem, 1, 100);
+
+            for (int i = 0; i < 10; i++)
+            {
+                S_rankmem.Start();
+                S_rankmem.Ruin(20);
+                S_rankmem.Recreate(ardto_rankmem, 3);
+                S_rankmem.Compare();
+            }
 
             Console.ReadLine();
         }

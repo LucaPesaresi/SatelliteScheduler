@@ -7,29 +7,34 @@ namespace SatelliteScheduler
 {
     public class Plan
     {
-        private List<ARDTO> plan { get; set; }
+        public List<ARDTO> plan { get; set; }
+
+        public Plan()
+        {
+            plan = new List<ARDTO>();
+        }
 
         public Plan(List<ARDTO> ardto)
         {
             plan = new List<ARDTO>();
-            CreatePlan(ardto);
+            BuildPlan(ardto);
         }
 
         //Creazione di un piano con una lista randomizzata
-        public void CreatePlan(List<ARDTO> ardto)
+        public void BuildPlan(List<ARDTO> ardto, double current_mem=0)
         { 
             int max = ardto.Count;
             bool ok; //indica se i vincoli sono rispettati
-            double current_mem = 0; // memoria attuale
-
-            plan.Add(ardto[0]);
-
-            current_mem += plan[0].memory;
-
+            
+            if (current_mem == 0)
+            {
+                plan.Add(ardto[0]);
+                current_mem += plan[0].memory;
+            }
             //Console.WriteLine("id_ar\t\tid_dto\t\trank\thigh\tstart\t\t\tstop\t\t\tmemory");
 
             int i;
-            for (i = 1; i < max; i++)
+            for (i = plan.Count; i < max; i++)
             {
                 ok = true;
                 int j;

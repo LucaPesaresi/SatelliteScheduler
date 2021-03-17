@@ -19,5 +19,11 @@ Implementare un algortimo Ruin & Recreate
 6. Se S migliore di S* => S* = S
 7. Ritorna a 2
 
+---------------
+
+Domande:
+
+Con quale criterio considero migiore un piano rispetto ad un altro?		rank_tot/mem?	rank e basta?
+Devo creare una funzione di tuning per capire migliorare gli iperparametri K-ruine, percentuale rumore?
 
 
