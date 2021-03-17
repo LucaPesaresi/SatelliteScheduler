@@ -9,11 +9,6 @@ public class JsonCaster
         public int id { get; set; }
         public int rank { get; set; }
         public bool highPriority { get; set; }
-
-        public static implicit operator List<object>(AR v)
-        {
-            throw new NotImplementedException();
-        }
     }
 
     public class DTO
@@ -76,6 +71,7 @@ public class JsonCaster
         public int id_ar { get; set; }
         public int id_dto { get; set; }
         public double rank { get; set; }
+        public double noisy_rank { get; set; }
         public bool highPriority { get; set; }
         public double start_time { get; set; }
         public double stop_time { get; set; }
@@ -86,6 +82,7 @@ public class JsonCaster
             id_ar = ar.id;
             id_dto = dto.id;
             rank = ar.rank;
+            noisy_rank = ar.rank;
             highPriority = ar.highPriority;
             start_time = dto.start_time;
             stop_time = dto.stop_time;

@@ -7,10 +7,17 @@ mettere insieme delle acquisizioni che non siano in conflitto:
 funzione che stampa la qualità del piano 
 (sommando la priorità dei rank serviti e conteggio delle acquisizione del piano )
 
+Implementare un algortimo Ruin & Recreate
+
 ------------------------------------------------------------------
 
-- iterare i 3 piani e confrontare con il migliore (quello dei rank)
-- implementare una funzione di disturbo randomizzata sul rank
+1. creo soluz iniziale S*
+2. Loop per N iter
+3. S = S*
+4. RUIN: rimuovi K dto da S
+5. RECREATE: riempi il piano e ottieni
+6. Se S migliore di S* => S* = S
+7. Ritorna a 2
 
 
 

@@ -7,8 +7,8 @@ namespace SatelliteScheduler
 {
     public class Plan
     {
-        List<ARDTO> plan;
-       
+        private List<ARDTO> plan { get; set; }
+
         public Plan(List<ARDTO> ardto)
         {
             plan = new List<ARDTO>();
