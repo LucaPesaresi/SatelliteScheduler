@@ -10,6 +10,7 @@ namespace SatelliteScheduler
         Plan best { get; set; }
         Plan best_star { get; set; }
 
+        // Testa i piani generati con un rumore crescente
         public void TestNoisyPlan(List<ARDTO> ardto, int max_it = 1000)
         {
             double max_rank = ardto.OrderByDescending(d => d.noisy_rank).First().rank;
@@ -21,6 +22,7 @@ namespace SatelliteScheduler
             }
         }
 
+        // Sceglie il piano migliore generando diversi piani disturbato 
         public void CreateNoisyPlan(List<ARDTO> ardto, int noise, int max_it = 1000)
         {
             List<Plan> plan_list = new List<Plan>();
@@ -28,8 +30,7 @@ namespace SatelliteScheduler
             for (int j = 0; j < max_it; j++)
             {
                 List<ARDTO> ardto_noisy = AddNoise(ardto, noise)
-                    .OrderByDescending(d => d.noisy_rank)
-                    .ThenByDescending(m => m.memory).ToList();
+                    .OrderByDescending(d => d.noisy_rank / d.memory).ToList();
 
                 Plan plan = new Plan(ardto_noisy);
                 plan_list.Add(plan);
@@ -50,61 +51,54 @@ namespace SatelliteScheduler
             return ardto;
         }
 
+        // Inizializza l'algortimo mantendendo una copia del piano
         public void Start()
         {
             best_star = new Plan();
 
-            foreach (var i in best.plan)
+            foreach (ARDTO a in best.plan)
             {
-                best_star.plan.Add(i);
+                best_star.plan.Add(a);
             }
         }
 
-        // Rimuove k elementi dal piano
+        // Rimuove k elementi (in percentuale) dal piano
         public void Ruin(int k)
         {
-            List<ARDTO> plan = best.plan;
-            int k_norm = Convert.ToInt32((plan.Count * k) / 100);
+            int k_norm = Convert.ToInt32((best.plan.Count * k) / 100);
             for (int i = 0; i < k_norm; i++)
             {
-                plan.RemoveAt(new Random().Next(0, plan.Count));
+                best.plan.RemoveAt(new Random().Next(0, best.plan.Count));
             }
-
-            best.plan = plan;
         }
 
+        // Riempie il piano con una strategia diversificata
         public void Recreate(List<ARDTO> ardto, int step_noise)
         {
             double mem = best.QualityPlan().memory;
-            List<ARDTO> noisy_ardto = AddNoise(ardto, step_noise).OrderByDescending(d => d.noisy_rank / d.memory).ToList();
+            List<ARDTO> noisy_ardto = AddNoise(ardto, step_noise)
+                .OrderByDescending(d => d.noisy_rank / d.memory)
+                .ToList();  
             best.BuildPlan(noisy_ardto, mem);
         }
 
+        // Confronta il piano ricreato con quello precedente e nel caso sia migliore lo sostituisce
         public void Compare()
         {
             Quality q_new = best.QualityPlan();
             Quality q_star = best_star.QualityPlan();
 
-            Console.WriteLine("-------------------------");
-            if (q_new.tot_rank / q_new.memory * q_new.n_ar > q_star.tot_rank / q_star.memory * q_new.n_ar)
+            if (q_new.tot_rank > q_star.tot_rank)
             {
                 best_star = best;
-                Console.WriteLine("\nIl nuovo piano risulta migliore");
+                Console.WriteLine("--------------------------------");
+                Console.WriteLine("Il nuovo piano risulta migliore");
                 q_new.PrintQuality();
-
-                Console.WriteLine("\nIl vecchio piano risulta");
-                q_star.PrintQuality();
             }
             else
             {
                 best = best_star;
-                Console.WriteLine("\nIl nuovo piano risulta");
-                q_new.PrintQuality();
-
-                Console.WriteLine("\nIl vecchio piano risulta migliore");
-                q_star.PrintQuality();
             }
-            Console.WriteLine("-------------------------");
         }
     }
 }

@@ -25,16 +25,17 @@ namespace SatelliteScheduler
         { 
             int max = ardto.Count;
             bool ok; //indica se i vincoli sono rispettati
-            
+            int i = 0;
+
             if (current_mem == 0)
             {
                 plan.Add(ardto[0]);
                 current_mem += plan[0].memory;
+                i++;
             }
             //Console.WriteLine("id_ar\t\tid_dto\t\trank\thigh\tstart\t\t\tstop\t\t\tmemory");
 
-            int i;
-            for (i = plan.Count; i < max; i++)
+            for (; i < max; i++)
             {
                 ok = true;
                 int j;

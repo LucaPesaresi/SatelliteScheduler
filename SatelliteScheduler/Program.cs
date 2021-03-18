@@ -29,9 +29,15 @@ namespace SatelliteScheduler
                 ar_dto.Add(ardto);
             });
 
+            GeneratePlans(ar_dto);
 
+            Console.WriteLine("\nSTOP");
+            Console.ReadLine();
+        }
 
-            //lista ordinata per ordine di: memoria meggiore, rank maggiore, casuale, casuale con disturbo
+        // Genera 4 piani ordinati per: memoria, rank, rank/memoria, rank/memoria disturbato
+        public static void GeneratePlans(List<ARDTO> ar_dto)
+        {
             Console.WriteLine("Test Piano in ordine di memoria");
             List<ARDTO> ardto_memory = ar_dto.OrderByDescending(d => d.memory).ToList();
             Plan plan_mem = new Plan(ardto_memory);
@@ -49,21 +55,23 @@ namespace SatelliteScheduler
             plan_rankmem.QualityPlan().PrintQuality();
 
             Console.WriteLine("\nTest Piano in ordine di rank/memoria disturbato");
-            Solution S_rankmem = new Solution();
-            Solution S_star = new Solution();
-           
-            S_rankmem.CreateNoisyPlan(ardto_rankmem, 1, 100);
-
-            for (int i = 0; i < 10; i++)
-            {
-                S_rankmem.Start();
-                S_rankmem.Ruin(20);
-                S_rankmem.Recreate(ardto_rankmem, 3);
-                S_rankmem.Compare();
-            }
-
-            Console.ReadLine();
+            RuinRecreate(ardto_rankmem);
         }
 
+        // Apllica l'algoritmo Ruin&Recreate per ottenere un'ipotetica soluzione migliore
+        public static void RuinRecreate(List<ARDTO> ardto)
+        {
+            Solution S = new Solution();
+            S.CreateNoisyPlan(ardto, 1, 1000);
+            Console.WriteLine("--------------------------------");
+            Console.WriteLine("RUIN & RECREATE");
+            for (int i = 0; i < 1000; i++)
+            {
+                S.Start();
+                S.Ruin(40);
+                S.Recreate(ardto, 1);
+                S.Compare();
+            }
+        }
     }
 }
