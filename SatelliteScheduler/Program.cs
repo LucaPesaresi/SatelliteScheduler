@@ -44,8 +44,7 @@ namespace SatelliteScheduler
             plan_mem.QualityPlan().PrintQuality();
 
             Console.WriteLine("\nTest Piano in ordine di rank");
-            List<ARDTO> ardto_rank = ar_dto.OrderByDescending(d => d.rank)
-                .ThenByDescending(m => m.memory).ToList();
+            List<ARDTO> ardto_rank = ar_dto.OrderByDescending(d => d.rank).ToList();
             Plan plan_rank = new Plan(ardto_rank);
             plan_rank.QualityPlan().PrintQuality();
 
@@ -61,16 +60,33 @@ namespace SatelliteScheduler
         // Apllica l'algoritmo Ruin&Recreate per ottenere un'ipotetica soluzione migliore
         public static void RuinRecreate(List<ARDTO> ardto)
         {
-            Solution S = new Solution();
-            S.CreateNoisyPlan(ardto, 1, 1000);
+            Plan P = new Plan();
+            P.CreateNoisyARDTO(ardto, 2, 100);
+           
             Console.WriteLine("--------------------------------");
             Console.WriteLine("RUIN & RECREATE");
             for (int i = 0; i < 1000; i++)
             {
-                S.Start();
-                S.Ruin(40);
-                S.Recreate(ardto, 1);
-                S.Compare();
+                PlanManager PL = new PlanManager();
+                Plan P_star = PL.CopyPlan(P);
+
+                //int k = Convert.ToInt32(new Random().Next(1, 40));
+                int k = 40;
+                P = PL.Ruin(P, k);
+
+                PL.Recreate(P, ardto, 2);
+
+                if (PL.Compare(P, P_star))
+                {
+                    P_star = PL.CopyPlan(P);
+                    Console.WriteLine("--------------------------------");
+                    Console.WriteLine("Il nuovo piano risulta migliore");
+                    P.QualityPlan().PrintQuality();
+                }
+                else
+                {
+                    P = PL.CopyPlan(P_star);
+                }
             }
         }
     }
