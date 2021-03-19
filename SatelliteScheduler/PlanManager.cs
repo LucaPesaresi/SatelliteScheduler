@@ -8,45 +8,42 @@ namespace SatelliteScheduler
     class PlanManager
     {
 
-        // Inizializza l'algortimo mantendendo una copia del piano
-        public Plan CopyPlan(Plan old)
+        // Crea una una copia del piano
+        public static Plan CopyPlan(Plan old)
         {
             Plan best_star = new Plan();
 
-            foreach (ARDTO a in old.plan)
+            foreach (ARDTO a in old.GetPlan())
             {
-                best_star.plan.Add(a);
+                best_star.GetPlan().Add(a);
             }
 
             return best_star;
         }
 
         // Rimuove k elementi (in percentuale) dal piano
-        public Plan Ruin(Plan P, int k)
+        public static Plan Ruin(Plan plan, int k)
         {
-            int k_norm = Convert.ToInt32(P.plan.Count * k / 100);
+            int k_norm = Convert.ToInt32(plan.GetPlan().Count * k / 100);
             for (int i = 0; i < k_norm; i++)
             {
-                P.plan.RemoveAt(new Random().Next(0, P.plan.Count));
+                plan.GetPlan().RemoveAt(new Random().Next(0, plan.GetPlan().Count));
             }
 
-            return P;
+            return plan;
         }
 
         // Riempie il piano con una strategia diversificata
-        public Plan Recreate(Plan P, List<ARDTO> ardto, int step_noise)
+        public static Plan Recreate(Plan P, List<ARDTO> ardto, int step_noise)
         {
             double mem = P.QualityPlan().memory;
-
-            P.AddNoise(ardto, step_noise);
-            P.ardto.OrderByDescending(d => d.noisy_rank).ToList();
-
-            P.BuildPlan(mem);
+            ardto.OrderByDescending(d => d.noisy_rank).ToList();
+            P.BuildPlan(Plan.AddNoise(ardto, step_noise), mem);
             return P;
         }
 
         // Confronta il piano ricreato con quello precedente e nel caso sia migliore lo sostituisce
-        public bool Compare(Plan P, Plan P_star)
+        public static bool Compare(Plan P, Plan P_star)
         {
             Quality q_new = P.QualityPlan();
             Quality q_star = P_star.QualityPlan();

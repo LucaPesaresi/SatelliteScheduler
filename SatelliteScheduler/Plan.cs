@@ -7,24 +7,21 @@ namespace SatelliteScheduler
 {
     public class Plan
     {
-        public List<ARDTO> plan { get; set; }
-        public List<ARDTO> ardto { get; set; }
+        private List<ARDTO> plan { get; set; }
 
         public Plan()
         {
-            plan = new List<ARDTO>();
-            ardto = new List<ARDTO>();
+            this.plan = new List<ARDTO>();
         }
 
-        public Plan(List<ARDTO> ardto)
+        public Plan(List<ARDTO> ardto, List<ARDTO> plan)
         {
-            plan = new List<ARDTO>();
-            this.ardto = ardto;
-            BuildPlan();
+            this.plan = new List<ARDTO>(plan);
+            BuildPlan(ardto);
         }
 
         //Creazione di un piano con una lista randomizzata
-        public void BuildPlan(double current_mem=0)
+        public void BuildPlan(List<ARDTO> ardto, double current_mem=0)
         { 
             bool ok; //indica se i vincoli sono rispettati
             int i = 0;
@@ -89,45 +86,57 @@ namespace SatelliteScheduler
         // Sceglie il piano migliore generando diversi piani disturbato 
         public void CreateNoisyARDTO(List<ARDTO> ardto, int noise, int max_it = 1000)
         {
-            List<Plan> plan_list = new List<Plan>();
+            Plan P = new Plan();
+            List<ARDTO> noisy_rank = AddNoise(ardto, noise);
+            noisy_rank.OrderByDescending(d => d.noisy_rank).ToList();
+            P.BuildPlan(noisy_rank);
+            double tot = P.QualityPlan().tot_rank;
 
             for (int j = 0; j < max_it; j++)
             {
-                Plan P = new Plan();
-                P.AddNoise(ardto, noise);
-                P.ardto.OrderByDescending(d => d.noisy_rank).ToList();
-                P.BuildPlan();
-                plan_list.Add(P);
+                Plan P_new = new Plan();
+                List<ARDTO> noisy_rank2 = AddNoise(ardto, noise);
+                noisy_rank2.OrderByDescending(d => d.noisy_rank).ToList();
+
+                P_new.BuildPlan(noisy_rank2);
+                double tot2 = P_new.QualityPlan().tot_rank;
+
+                if (P_new.QualityPlan().tot_rank > P.QualityPlan().tot_rank)
+                {
+                    P.plan = P_new.plan;
+                }
             }
-
-            Plan best = plan_list.OrderByDescending(p => p.QualityPlan().tot_rank).First();
-            best.QualityPlan().PrintQuality();
-
-            this.plan = best.plan;
-            this.ardto = best.ardto;
+            //Plan best = plan_list.OrderByDescending(p => p.QualityPlan().tot_rank).First();
+            P.QualityPlan().PrintQuality();
+            this.plan = P.plan;
         }
 
         // Aggiunge un rumore ad una quantità di dati e con una discreta scalabilità
-        public void AddNoise(List<ARDTO> ardto, double step_noise)
+        public static List<ARDTO> AddNoise(List<ARDTO> ardto, double step_noise)
         {
             List<ARDTO> ardto_noisy = new List<ARDTO>();
 
-            ardto.ForEach(a => ardto_noisy.Add(a));
+            ardto.ForEach(p => ardto_noisy.Add(p));
 
-            //foreach (ARDTO a in ardto_noisy)
-            //{
-            //    double value_noise = (new Random().NextDouble() * 2 * step_noise) - step_noise;
-            //    a.noisy_rank = (a.rank + value_noise) / a.memory;
-            //}
-
-            for (int i = 0; i < ardto_noisy.Count; i++)
+            foreach (ARDTO a in ardto_noisy)
             {
                 double value_noise = (new Random().NextDouble() * 2 * step_noise) - step_noise;
-                ardto_noisy[i].noisy_rank = (ardto_noisy[i].rank + value_noise) / ardto_noisy[i].memory;
+                a.noisy_rank = (a.rank + value_noise) / a.memory;
             }
 
-            this.ardto = ardto_noisy;
+            //for (int i = 0; i < ardto_noisy.Count; i++)
+            //{
+            //    double value_noise = (new Random().NextDouble() * 2 * step_noise) - step_noise;
+            //    ardto_noisy[i].noisy_rank = (ardto_noisy[i].rank + value_noise) / ardto_noisy[i].memory;
+            //}
+
+            return ardto_noisy;
         }
+
+        public List<ARDTO> GetPlan()
+        {
+            return this.plan;
+        } 
 
         // Restituisce una qualità del piano in temrini di  numero di acquisizioni, 
         // rank totale e memoria occupata

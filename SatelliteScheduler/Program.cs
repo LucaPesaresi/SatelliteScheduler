@@ -40,17 +40,20 @@ namespace SatelliteScheduler
         {
             Console.WriteLine("Test Piano in ordine di memoria");
             List<ARDTO> ardto_memory = ar_dto.OrderByDescending(d => d.memory).ToList();
-            Plan plan_mem = new Plan(ardto_memory);
+            Plan plan_mem = new Plan();
+            plan_mem.BuildPlan(ardto_memory);
             plan_mem.QualityPlan().PrintQuality();
 
             Console.WriteLine("\nTest Piano in ordine di rank");
             List<ARDTO> ardto_rank = ar_dto.OrderByDescending(d => d.rank).ToList();
-            Plan plan_rank = new Plan(ardto_rank);
+            Plan plan_rank = new Plan();
+            plan_rank.BuildPlan(ardto_rank);
             plan_rank.QualityPlan().PrintQuality();
 
             Console.WriteLine("\nTest Piano in ordine di rank/memoria");
             List<ARDTO> ardto_rankmem = ar_dto.OrderByDescending(d => d.rank / d.memory).ToList();
-            Plan plan_rankmem = new Plan(ardto_rankmem);
+            Plan plan_rankmem = new Plan();
+            plan_rankmem.BuildPlan(ardto_rankmem);
             plan_rankmem.QualityPlan().PrintQuality();
 
             Console.WriteLine("\nTest Piano in ordine di rank/memoria disturbato");
@@ -67,25 +70,24 @@ namespace SatelliteScheduler
             Console.WriteLine("RUIN & RECREATE");
             for (int i = 0; i < 1000; i++)
             {
-                PlanManager PL = new PlanManager();
-                Plan P_star = PL.CopyPlan(P);
+                Plan P_star = PlanManager.CopyPlan(P);
 
                 //int k = Convert.ToInt32(new Random().Next(1, 40));
                 int k = 40;
-                P = PL.Ruin(P, k);
+                P = PlanManager.Ruin(P, k);
 
-                PL.Recreate(P, ardto, 2);
+                PlanManager.Recreate(P, ardto, 2);
 
-                if (PL.Compare(P, P_star))
+                if (PlanManager.Compare(P, P_star))
                 {
-                    P_star = PL.CopyPlan(P);
+                    P_star = PlanManager.CopyPlan(P);
                     Console.WriteLine("--------------------------------");
                     Console.WriteLine("Il nuovo piano risulta migliore");
                     P.QualityPlan().PrintQuality();
                 }
                 else
                 {
-                    P = PL.CopyPlan(P_star);
+                    P = PlanManager.CopyPlan(P_star);
                 }
             }
         }
