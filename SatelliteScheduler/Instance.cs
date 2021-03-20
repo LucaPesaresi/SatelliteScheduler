@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Newtonsoft.Json;
 using System.Linq;
 using static JsonCaster;
@@ -59,8 +58,8 @@ namespace SatelliteScheduler
             }
 
             ar_dto = ar_dto.OrderByDescending(d => d.noisy_rank).ToList();
-
         }
+
         public List<ARDTO> GetARDTOs() 
         {
             return ar_dto;

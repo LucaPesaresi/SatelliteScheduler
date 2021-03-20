@@ -82,11 +82,10 @@ namespace SatelliteScheduler
             }
         }
 
-        public void RemoveAt(int index) {
-
+        public void RemoveAt(int index) 
+        {
             current_mem -= plan[index].memory;
             plan.RemoveAt(index);
-
         }
 
         public List<ARDTO> GetPlan()

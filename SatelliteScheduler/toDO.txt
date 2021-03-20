@@ -23,7 +23,6 @@ Implementare un algortimo Ruin & Recreate
 
 Domande:
 
-Con quale criterio considero migiore un piano rispetto ad un altro?		rank_tot
-Devo creare una funzione di tuning per capire migliorare gli iperparametri K-ruine, percentuale rumore?
+
 
 

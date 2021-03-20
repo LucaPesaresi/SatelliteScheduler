@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using static JsonCaster;
 
 namespace SatelliteScheduler
 {
@@ -15,7 +12,6 @@ namespace SatelliteScheduler
             best_plan.BuildPlan();
             double best_obj = best_plan.QualityPlan().tot_rank;
 
-
             for (int n = 0; n < max_it; n++) {
 
                 Plan candidate_plan = new Plan(instance);
@@ -27,11 +23,9 @@ namespace SatelliteScheduler
                     best_obj = candidate_obj;
                     best_plan = Plan.Copy(candidate_plan);
                 }
-
             }
 
             return best_plan;
-
         }
 
         // Rimuove k elementi (in percentuale) dal piano
@@ -55,11 +49,19 @@ namespace SatelliteScheduler
         }
 
         // Confronta il piano ricreato con quello precedente e nel caso sia migliore lo sostituisce
-        public static bool Compare(Plan P, Plan P_star)
+        public static Plan Compare(Plan P, Plan P_star)
         {
-            Quality q_new = P.QualityPlan();
-            Quality q_star = P_star.QualityPlan();
-            return (q_new.tot_rank > q_star.tot_rank);
+            double best_obj = P.QualityPlan().tot_rank;
+            double star_obj = P_star.QualityPlan().tot_rank;
+
+            if (star_obj > best_obj)
+            {
+                P = Plan.Copy(P_star);
+                Console.WriteLine("--------------------------------");
+                Console.WriteLine("Il nuovo piano risulta migliore");
+                P.QualityPlan().PrintQuality();
+            }
+            return P;
         }
     }
 }

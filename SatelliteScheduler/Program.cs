@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using static JsonCaster;
-
 
 namespace SatelliteScheduler
 {
     class Program
     {
         public static double max_mem;
+
         static void Main(string[] args)
         {
             string ars = System.IO.File.ReadAllText(@"day1_0/ARs.json");
@@ -54,30 +51,18 @@ namespace SatelliteScheduler
 
             Plan best_plan = RuinAndRecreate.CreateInitialPlan(instance, 2, 100);
             best_plan.QualityPlan().PrintQuality();
-            double best_obj = best_plan.QualityPlan().tot_rank; 
 
             Console.WriteLine("--------------------------------");
             Console.WriteLine("RUIN & RECREATE");
             for (int i = 0; i < 1000; i++)
             {
-                Plan candidate_plan = Plan.Copy(best_plan);
+                Plan star_plan = Plan.Copy(best_plan);
 
                 //int k = Convert.ToInt32(new Random().Next(1, 40));
                 int k = 40;
-                candidate_plan = RuinAndRecreate.Ruin(candidate_plan, k);
-                candidate_plan = RuinAndRecreate.Recreate(instance, candidate_plan, 2);
-
-                double candidate_obj = candidate_plan.QualityPlan().tot_rank;
-
-                if (candidate_obj > best_obj)
-                {
-                    best_obj = candidate_obj;
-                    best_plan = Plan.Copy(candidate_plan);
-                    Console.WriteLine("--------------------------------");
-                    Console.WriteLine("Il nuovo piano risulta migliore");
-                    best_plan.QualityPlan().PrintQuality();
-                }
-               
+                star_plan = RuinAndRecreate.Ruin(star_plan, k);
+                star_plan = RuinAndRecreate.Recreate(instance, star_plan, 2);
+                best_plan = RuinAndRecreate.Compare(best_plan, star_plan);
             }
         }
     }
