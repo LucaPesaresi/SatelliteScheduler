@@ -42,13 +42,14 @@ namespace SatelliteScheduler
             plan_rankmem.QualityPlan().PrintQuality();
 
             Console.WriteLine("\nTest Piano in ordine di rank/memoria disturbato");
-            RuinRecreate(instance);
+            //RuinRecreate(instance);
+
+            Tuner T = new Tuner(instance);
         }
 
         // Apllica l'algoritmo Ruin&Recreate per ottenere un'ipotetica soluzione migliore
-        public static void RuinRecreate(Instance instance)
+        public static Plan RuinRecreate(Instance instance)
         {
-
             Plan best_plan = RuinAndRecreate.CreateInitialPlan(instance, 2, 100);
             best_plan.QualityPlan().PrintQuality();
 
@@ -57,13 +58,13 @@ namespace SatelliteScheduler
             for (int i = 0; i < 1000; i++)
             {
                 Plan star_plan = Plan.Copy(best_plan);
-
-                //int k = Convert.ToInt32(new Random().Next(1, 40));
-                int k = 40;
+                int k = Convert.ToInt32(new Random().Next(1, 40));
+                //int k = 40;
                 star_plan = RuinAndRecreate.Ruin(star_plan, k);
                 star_plan = RuinAndRecreate.Recreate(instance, star_plan, 2);
                 best_plan = RuinAndRecreate.Compare(best_plan, star_plan);
             }
+            return best_plan;
         }
     }
 }

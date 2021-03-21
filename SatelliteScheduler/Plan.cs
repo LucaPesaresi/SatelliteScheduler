@@ -118,6 +118,15 @@ namespace SatelliteScheduler
             this.tot_memory = tot_memory;
         }
 
+        public string[] WriteQuality()
+        {
+            return new string[] { 
+                "Acquisizioni: " + n_ar,
+                "Rank: " + tot_rank,
+                 "Memoria usata: " + memory + " su " + tot_memory + " GB"
+             };
+        }
+
         public void PrintQuality()
         {
             Console.WriteLine("Acquisizioni: " + n_ar);

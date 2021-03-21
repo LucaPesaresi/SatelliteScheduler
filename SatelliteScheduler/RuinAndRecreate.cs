@@ -57,9 +57,9 @@ namespace SatelliteScheduler
             if (star_obj > best_obj)
             {
                 P = Plan.Copy(P_star);
-                Console.WriteLine("--------------------------------");
-                Console.WriteLine("Il nuovo piano risulta migliore");
-                P.QualityPlan().PrintQuality();
+                //Console.WriteLine("--------------------------------");
+                //Console.WriteLine("Il nuovo piano risulta migliore");
+                //P.QualityPlan().PrintQuality();
             }
             return P;
         }
