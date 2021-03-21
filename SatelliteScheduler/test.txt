@@ -335,3 +335,454 @@ Acquisizioni: 149
 Rank: 12488
 Memoria usata: 1480,78 su 1481 GB
 ---------------------------
+---------------------------
+K-ruin: 5	Noise: 1
+Piano minimo
+Acquisizioni: 143
+Rank: 11811
+Memoria usata: 1386,4 su 1481 GB
+Piano massimo
+Acquisizioni: 144
+Rank: 11898
+Memoria usata: 1393,13 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 5	Noise: 2
+Piano minimo
+Acquisizioni: 143
+Rank: 11918
+Memoria usata: 1393,79 su 1481 GB
+Piano massimo
+Acquisizioni: 146
+Rank: 12047
+Memoria usata: 1424,81 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 5	Noise: 3
+Piano minimo
+Acquisizioni: 143
+Rank: 11975
+Memoria usata: 1400,26 su 1481 GB
+Piano massimo
+Acquisizioni: 147
+Rank: 12092
+Memoria usata: 1440,38 su 1481 GB
+--------------------------- 
+---------------------------
+K-ruin: 5	Noise: 4
+Piano minimo
+Acquisizioni: 144
+Rank: 11992
+Memoria usata: 1414,12 su 1481 GB
+Piano massimo
+Acquisizioni: 148
+Rank: 12208
+Memoria usata: 1462,96 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 5	Noise: 5
+Piano minimo
+Acquisizioni: 147
+Rank: 12056
+Memoria usata: 1444,34 su 1481 GB
+Piano massimo
+Acquisizioni: 147
+Rank: 12258
+Memoria usata: 1451,21 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 5	Noise: 6
+Piano minimo
+Acquisizioni: 148
+Rank: 12136
+Memoria usata: 1467,31 su 1481 GB
+Piano massimo
+Acquisizioni: 149
+Rank: 12304
+Memoria usata: 1475,1 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 5	Noise: 7
+Piano minimo
+Acquisizioni: 150
+Rank: 12199
+Memoria usata: 1480,64 su 1481 GB
+Piano massimo
+Acquisizioni: 149
+Rank: 12320
+Memoria usata: 1479,19 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 5	Noise: 8
+Piano minimo
+Acquisizioni: 149
+Rank: 12165
+Memoria usata: 1477,87 su 1481 GB
+Piano massimo
+Acquisizioni: 149
+Rank: 12283
+Memoria usata: 1475,89 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 5	Noise: 9
+Piano minimo
+Acquisizioni: 149
+Rank: 12157
+Memoria usata: 1480,12 su 1481 GB
+Piano massimo
+Acquisizioni: 149
+Rank: 12349
+Memoria usata: 1480,78 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 5	Noise: 10
+Piano minimo
+Acquisizioni: 148
+Rank: 12191
+Memoria usata: 1480,64 su 1481 GB
+Piano massimo
+Acquisizioni: 149
+Rank: 12397
+Memoria usata: 1479,59 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 10	Noise: 1
+Piano minimo
+Acquisizioni: 143
+Rank: 11833
+Memoria usata: 1384,42 su 1481 GB
+Piano massimo
+Acquisizioni: 144
+Rank: 11898
+Memoria usata: 1393,13 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 10	Noise: 2
+Piano minimo
+Acquisizioni: 144
+Rank: 11988
+Memoria usata: 1410,02 su 1481 GB
+Piano massimo
+Acquisizioni: 146
+Rank: 12071
+Memoria usata: 1423,09 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 10	Noise: 3
+Piano minimo
+Acquisizioni: 145
+Rank: 11992
+Memoria usata: 1420,98 su 1481 GB
+Piano massimo
+Acquisizioni: 147
+Rank: 12142
+Memoria usata: 1438,14 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 10	Noise: 4
+Piano minimo
+Acquisizioni: 146
+Rank: 12135
+Memoria usata: 1437,22 su 1481 GB
+Piano massimo
+Acquisizioni: 149
+Rank: 12276
+Memoria usata: 1469,69 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 10	Noise: 5
+Piano minimo
+Acquisizioni: 149
+Rank: 12177
+Memoria usata: 1471,01 su 1481 GB
+Piano massimo
+Acquisizioni: 149
+Rank: 12277
+Memoria usata: 1475,89 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 10	Noise: 6
+Piano minimo
+Acquisizioni: 149
+Rank: 12238
+Memoria usata: 1479,59 su 1481 GB
+Piano massimo
+Acquisizioni: 150
+Rank: 12333
+Memoria usata: 1479,06 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 10	Noise: 7
+Piano minimo
+Acquisizioni: 149
+Rank: 12252
+Memoria usata: 1480,12 su 1481 GB
+Piano massimo
+Acquisizioni: 149
+Rank: 12371
+Memoria usata: 1480,64 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 10	Noise: 8
+Piano minimo
+Acquisizioni: 149
+Rank: 12239
+Memoria usata: 1480,12 su 1481 GB
+Piano massimo
+Acquisizioni: 148
+Rank: 12454
+Memoria usata: 1476,02 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 10	Noise: 9
+Piano minimo
+Acquisizioni: 149
+Rank: 12254
+Memoria usata: 1479,98 su 1481 GB
+Piano massimo
+Acquisizioni: 148
+Rank: 12446
+Memoria usata: 1479,72 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 10	Noise: 10
+Piano minimo
+Acquisizioni: 148
+Rank: 12295
+Memoria usata: 1480,64 su 1481 GB
+Piano massimo
+Acquisizioni: 149
+Rank: 12488
+Memoria usata: 1480,78 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 15	Noise: 1
+Piano minimo
+Acquisizioni: 144
+Rank: 11881
+Memoria usata: 1394,98 su 1481 GB
+Piano massimo
+Acquisizioni: 144
+Rank: 11896
+Memoria usata: 1393 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 15	Noise: 2
+Piano minimo
+Acquisizioni: 144
+Rank: 11997
+Memoria usata: 1408,18 su 1481 GB
+Piano massimo
+Acquisizioni: 146
+Rank: 12079
+Memoria usata: 1426,52 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 15	Noise: 3
+Piano minimo
+Acquisizioni: 147
+Rank: 12134
+Memoria usata: 1435,76 su 1481 GB
+Piano massimo
+Acquisizioni: 147
+Rank: 12152
+Memoria usata: 1439,99 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 15	Noise: 4
+Piano minimo
+Acquisizioni: 148
+Rank: 12184
+Memoria usata: 1450,28 su 1481 GB
+Piano massimo
+Acquisizioni: 150
+Rank: 12294
+Memoria usata: 1479,06 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 15	Noise: 5
+Piano minimo
+Acquisizioni: 148
+Rank: 12224
+Memoria usata: 1458,47 su 1481 GB
+Piano massimo
+Acquisizioni: 149
+Rank: 12306
+Memoria usata: 1470,74 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 15	Noise: 6
+Piano minimo
+Acquisizioni: 149
+Rank: 12273
+Memoria usata: 1478,93 su 1481 GB
+Piano massimo
+Acquisizioni: 149
+Rank: 12374
+Memoria usata: 1480,38 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 15	Noise: 7
+Piano minimo
+Acquisizioni: 149
+Rank: 12327
+Memoria usata: 1472,33 su 1481 GB
+Piano massimo
+Acquisizioni: 150
+Rank: 12419
+Memoria usata: 1480,51 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 15	Noise: 8
+Piano minimo
+Acquisizioni: 148
+Rank: 12350
+Memoria usata: 1475,89 su 1481 GB
+Piano massimo
+Acquisizioni: 149
+Rank: 12444
+Memoria usata: 1480,12 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 15	Noise: 9
+Piano minimo
+Acquisizioni: 150
+Rank: 12354
+Memoria usata: 1480,91 su 1481 GB
+Piano massimo
+Acquisizioni: 149
+Rank: 12480
+Memoria usata: 1480,51 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 15	Noise: 10
+Piano minimo
+Acquisizioni: 148
+Rank: 12420
+Memoria usata: 1480,12 su 1481 GB
+Piano massimo
+Acquisizioni: 149
+Rank: 12484
+Memoria usata: 1479,98 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 20	Noise: 1
+Piano minimo
+Acquisizioni: 143
+Rank: 11881
+Memoria usata: 1385,08 su 1481 GB
+Piano massimo
+Acquisizioni: 145
+Rank: 11921
+Memoria usata: 1402,76 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 20	Noise: 2
+Piano minimo
+Acquisizioni: 145
+Rank: 12011
+Memoria usata: 1414,64 su 1481 GB
+Piano massimo
+Acquisizioni: 147
+Rank: 12140
+Memoria usata: 1433,65 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 20	Noise: 3
+Piano minimo
+Acquisizioni: 146
+Rank: 12095
+Memoria usata: 1431,28 su 1481 GB
+Piano massimo
+Acquisizioni: 149
+Rank: 12230
+Memoria usata: 1461,9 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 20	Noise: 4
+Piano minimo
+Acquisizioni: 147
+Rank: 12173
+Memoria usata: 1442,23 su 1481 GB
+Piano massimo
+Acquisizioni: 149
+Rank: 12274
+Memoria usata: 1473,38 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 20	Noise: 5
+Piano minimo
+Acquisizioni: 149
+Rank: 12336
+Memoria usata: 1473,12 su 1481 GB
+Piano massimo
+Acquisizioni: 149
+Rank: 12354
+Memoria usata: 1471,4 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 20	Noise: 6
+Piano minimo
+Acquisizioni: 149
+Rank: 12300
+Memoria usata: 1480,51 su 1481 GB
+Piano massimo
+Acquisizioni: 150
+Rank: 12380
+Memoria usata: 1480,78 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 20	Noise: 7
+Piano minimo
+Acquisizioni: 150
+Rank: 12344
+Memoria usata: 1480,38 su 1481 GB
+Piano massimo
+Acquisizioni: 149
+Rank: 12441
+Memoria usata: 1477,34 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 20	Noise: 8
+Piano minimo
+Acquisizioni: 149
+Rank: 12328
+Memoria usata: 1475,89 su 1481 GB
+Piano massimo
+Acquisizioni: 150
+Rank: 12460
+Memoria usata: 1480,25 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 20	Noise: 9
+Piano minimo
+Acquisizioni: 150
+Rank: 12382
+Memoria usata: 1480,91 su 1481 GB
+Piano massimo
+Acquisizioni: 149
+Rank: 12447
+Memoria usata: 1478,93 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 20	Noise: 10
+Piano minimo
+Acquisizioni: 149
+Rank: 12374
+Memoria usata: 1477,08 su 1481 GB
+Piano massimo
+Acquisizioni: 149
+Rank: 12488
+Memoria usata: 1480,91 su 1481 GB
+---------------------------
+---------------------------
+K-ruin: 30	Noise: 1
+Piano minimo
+Acquisizioni: 144
+Rank: 11898
+Memoria usata: 1393,13 su 1481 GB
+Piano massimo
+Acquisizioni: 145
+Rank: 11962
+Memoria usata: 1404,22 su 1481 GB
+---------------------------
