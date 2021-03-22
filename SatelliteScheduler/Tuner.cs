@@ -43,14 +43,14 @@ namespace SatelliteScheduler
 
         public static Plan RuinRecreate(Instance instance, int k, int noise)
         {
-            Plan best_plan = RuinAndRecreate.CreateInitialPlan(instance, noise, 100);
+            Plan best_plan = Euristics.CreateInitialPlan(instance, noise, 100);
             for (int i = 0; i < 100; i++)
             {
                 Plan star_plan = Plan.Copy(best_plan);
                 //int k = Convert.ToInt32(new Random().Next(1, 40));
-                star_plan = RuinAndRecreate.Ruin(star_plan, k);
-                star_plan = RuinAndRecreate.Recreate(instance, star_plan, noise);
-                best_plan = RuinAndRecreate.Compare(best_plan, star_plan);
+                star_plan = Euristics.Ruin(star_plan, k);
+                star_plan = Euristics.Recreate(instance, star_plan, noise);
+                best_plan = Euristics.Compare(best_plan, star_plan);
             }
             return best_plan;
         }

@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SatelliteScheduler
 {
-    class RuinAndRecreate
+    class Euristics
     {
 
         public static Plan CreateInitialPlan(Instance instance, double noise, int max_it=1000) {
@@ -62,6 +63,42 @@ namespace SatelliteScheduler
                 //P.QualityPlan().PrintQuality();
             }
             return P;
+        }
+    }
+
+    class SimulatedAnnealing
+    {
+        public static List<Plan> Compare(Plan P_best, Plan P_neigh , Plan P_curr, double t)
+        {
+            List<Plan> plans = new List<Plan>(2);
+
+            double best_obj = P_best.QualityPlan().tot_rank;
+            double neigh_obj = P_neigh.QualityPlan().tot_rank;
+            double curr_obj = P_curr.QualityPlan().tot_rank;
+
+            if (neigh_obj > best_obj)
+            {
+                plans.Add(Plan.Copy(P_neigh));
+                //Console.WriteLine("Il nuovo piano risulta migliore");
+                //P_neigh.QualityPlan().PrintQuality();
+                //Console.WriteLine("--------------------------------");
+            }
+            else
+            {
+                plans.Add(null);
+            }
+
+            double curr_obj_norm = curr_obj - t * Math.Log(new Random().NextDouble());
+            if (neigh_obj > curr_obj_norm)
+            {
+                plans.Add(Plan.Copy(P_neigh));
+            }
+            else
+            {
+                plans.Add(null);
+            }
+
+            return plans;
         }
     }
 }

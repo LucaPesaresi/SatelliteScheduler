@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SatelliteScheduler
 {
@@ -42,29 +43,76 @@ namespace SatelliteScheduler
             plan_rankmem.QualityPlan().PrintQuality();
 
             Console.WriteLine("\nTest Piano in ordine di rank/memoria disturbato");
-            //RuinRecreate(instance);
+            Plan plan_noisyrankmem = Euristics.CreateInitialPlan(instance, 2, 100);
+            plan_noisyrankmem.QualityPlan().PrintQuality();
 
-            Tuner T = new Tuner(instance);
+            Plan rr = RuinRecreate(instance, plan_noisyrankmem);
+            Console.WriteLine("--------------------------------");
+            rr.QualityPlan().PrintQuality();
+
+            Plan sa = SA(instance, plan_noisyrankmem);
+            Console.WriteLine("--------------------------------");
+            sa.QualityPlan().PrintQuality();
+
+            //Tuner T = new Tuner(instance);
         }
 
         // Apllica l'algoritmo Ruin&Recreate per ottenere un'ipotetica soluzione migliore
-        public static Plan RuinRecreate(Instance instance)
+        public static Plan RuinRecreate(Instance instance, Plan best_plan)
         {
-            Plan best_plan = RuinAndRecreate.CreateInitialPlan(instance, 2, 100);
-            best_plan.QualityPlan().PrintQuality();
-
             Console.WriteLine("--------------------------------");
             Console.WriteLine("RUIN & RECREATE");
+
             for (int i = 0; i < 1000; i++)
             {
                 Plan star_plan = Plan.Copy(best_plan);
                 int k = Convert.ToInt32(new Random().Next(1, 40));
                 //int k = 40;
-                star_plan = RuinAndRecreate.Ruin(star_plan, k);
-                star_plan = RuinAndRecreate.Recreate(instance, star_plan, 2);
-                best_plan = RuinAndRecreate.Compare(best_plan, star_plan);
+                star_plan = Euristics.Ruin(star_plan, k);
+                star_plan = Euristics.Recreate(instance, star_plan, 2);
+                best_plan = Euristics.Compare(best_plan, star_plan);
             }
             return best_plan;
         }
+
+        // Apllica l'algoritmo Simulated Annealing per ottenere un'ipotetica soluzione migliore
+        public static Plan SA(Instance instance, Plan best_plan, int max_it=1000)
+        {
+            Console.WriteLine("--------------------------------");
+            Console.WriteLine("SIMULATED ANNEALING");
+
+            double best_obj = best_plan.QualityPlan().tot_rank;
+            double t0 = best_obj / 100;
+            double tf = t0 / 100;
+            double t = t0;
+            double c = Math.Pow(tf / t0, 1 / (double)max_it);
+
+            Plan current_plan = Plan.Copy(best_plan);
+
+            for (int i = 0; i < max_it; i++)
+            {
+                Plan neighbor_plan = Plan.Copy(current_plan);
+                //int k = Convert.ToInt32(new Random().Next(1, 40));
+                int k = 40;
+                neighbor_plan = Euristics.Ruin(neighbor_plan, k);
+                neighbor_plan = Euristics.Recreate(instance, neighbor_plan, 2);
+                List<Plan> ps = SimulatedAnnealing.Compare(best_plan, neighbor_plan, current_plan, t);
+
+                if (ps[0] != null)
+                {
+                    best_plan = Plan.Copy(ps[0]);
+                }
+
+                if (ps[1] != null)
+                {
+                    current_plan = Plan.Copy(ps[1]);
+                }
+
+                t = c * t;
+            }
+            return best_plan;
+        }
+
+
     }
 }
