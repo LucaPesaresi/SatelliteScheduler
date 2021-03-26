@@ -6,7 +6,7 @@ namespace SatelliteScheduler
     class Euristics
     {
 
-        public static Plan CreateInitialPlan(Instance instance, double noise, int max_it=1000) {
+        public static Plan CreateInitialPlan(Instance instance, double noise, int max_it) {
 
             Plan best_plan = new Plan(instance);
             instance.SetRandomNoiseAndSortARDTOs(noise);
@@ -30,12 +30,12 @@ namespace SatelliteScheduler
         }
 
         // Rimuove k elementi (in percentuale) dal piano
-        public static Plan Ruin(Plan plan, int k)
+        public static Plan Ruin(Instance instance, Plan plan, int k)
         {
             int k_norm = Convert.ToInt32(plan.GetPlan().Count * k / 100);
             for (int i = 0; i < k_norm; i++)
             {
-                plan.RemoveAt(new Random().Next(0, plan.GetPlan().Count));
+                plan.RemoveAt(instance.GetRandom().Next(0, plan.GetPlan().Count));
             }
 
             return plan;
@@ -50,7 +50,7 @@ namespace SatelliteScheduler
         }
 
         // Confronta il piano ricreato con quello precedente e nel caso sia migliore lo sostituisce
-        public static Plan Compare(Plan P, Plan P_star)
+        public static Plan CompareRR(Plan P, Plan P_star)
         {
             double best_obj = P.QualityPlan().tot_rank;
             double star_obj = P_star.QualityPlan().tot_rank;
@@ -64,11 +64,8 @@ namespace SatelliteScheduler
             }
             return P;
         }
-    }
 
-    class SimulatedAnnealing
-    {
-        public static List<Plan> Compare(Plan P_best, Plan P_neigh , Plan P_curr, double t)
+        public static List<Plan> CompareSA(Plan P_best, Plan P_neigh, Plan P_curr, double t)
         {
             List<Plan> plans = new List<Plan>(2);
 
@@ -88,7 +85,7 @@ namespace SatelliteScheduler
                 plans.Add(null);
             }
 
-            double curr_obj_norm = curr_obj - t * Math.Log(new Random().NextDouble());
+            double curr_obj_norm = curr_obj - t * Math.Log(new Random(Program.seed).NextDouble());
             if (neigh_obj > curr_obj_norm)
             {
                 plans.Add(Plan.Copy(P_neigh));

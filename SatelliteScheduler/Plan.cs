@@ -74,10 +74,6 @@ namespace SatelliteScheduler
                         plan.Add(instance.GetARDTO(i));
                         current_mem += instance.GetARDTO(i).memory;
                     }
-                    //else
-                    //{
-                    //    int breakaa = 10;
-                    //}
                 }
             }
         }
@@ -105,17 +101,39 @@ namespace SatelliteScheduler
 
     public class Quality
     {
-        public int n_ar { get; set; }
+        public double n_ar { get; set; }
         public double tot_rank { get; set; }
         public double memory { get; set; }
         public double tot_memory { get; set; }
+        public int k { get; set; }
+        public int noise { get; set; }
+        public double temp { get; set; }
+        public int it_max { get; set; }
 
-        public Quality(int n_ar, double tot_rank, double memory, double tot_memory)
+        public Quality(double n_ar, double tot_rank, double memory, double tot_memory)
         {
             this.n_ar = n_ar;
             this.tot_rank = tot_rank;
             this.memory = memory;
             this.tot_memory = tot_memory;
+        }
+
+        public Quality(double n_ar, double tot_rank, double memory, int k, int noise)
+        {
+            this.n_ar = n_ar;
+            this.tot_rank = tot_rank;
+            this.memory = memory;
+            this.k = k;
+            this.noise = noise;
+        }
+
+        public Quality(double n_ar, double tot_rank, double memory, double temp, int it_max)
+        {
+            this.n_ar = n_ar;
+            this.tot_rank = tot_rank;
+            this.memory = memory;
+            this.temp = temp;
+            this.it_max = it_max;
         }
 
         public string WriteQuality()
@@ -128,6 +146,18 @@ namespace SatelliteScheduler
             Console.WriteLine("Acquisizioni: " + n_ar);
             Console.WriteLine("Rank: " + tot_rank);
             Console.WriteLine("Memoria usata: " + memory + " su " + tot_memory + " GB");
+        }
+
+        public void PrintQualityRR()
+        {
+            Console.WriteLine(k.ToString() + "\t" + noise + "\t" + n_ar + "\t" 
+                + tot_rank + "\t" + memory + "\t" + tot_memory);
+        }
+
+        public void PrintQualitySA()
+        {
+            Console.WriteLine(temp + "\t" + it_max + "\t" + n_ar + "\t" 
+                + tot_rank + "\t" + memory + "\t" + tot_memory);
         }
     }
 }

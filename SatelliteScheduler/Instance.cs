@@ -12,13 +12,16 @@ namespace SatelliteScheduler
 
         private readonly double max_mem;
         private List<ARDTO> ar_dto;
+        private Random rnd;
 
-        public Instance(string ars, string dtos, string consts)
+        public Instance(string ars, string dtos, string consts, int seed)
         {
 
             List<AR> ARlist = JsonConvert.DeserializeObject<List<AR>>(ars);
             List<DTO> DTOlist = JsonConvert.DeserializeObject<List<DTO>>(dtos);
             Costants constlist = JsonConvert.DeserializeObject<Costants>(consts);
+
+            rnd = new Random(seed);
 
             max_mem = constlist.MEMORY_CAP;
 
@@ -53,7 +56,7 @@ namespace SatelliteScheduler
 
             foreach (ARDTO a in ar_dto)
             {
-                double value_noise = (new Random().NextDouble() * 2 * max_noise) - max_noise;
+                double value_noise = (rnd.NextDouble() * 2 * max_noise) - max_noise;
                 a.noisy_rank = (a.rank + value_noise) / a.memory;
             }
 
@@ -70,5 +73,9 @@ namespace SatelliteScheduler
             return ar_dto[index];
         }
 
+        public Random GetRandom()
+        {
+            return rnd;
+        }
     }
 }

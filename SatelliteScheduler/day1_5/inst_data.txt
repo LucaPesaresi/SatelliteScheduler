@@ -1,0 +1,15 @@
+Instance:                day1_5
+AR number:               3641
+DTO number:              7103
+DLO number:              25
+Days:                    1
+Memory Cap (GB):         1733
+Mem start %:             0.2
+Mem end %:               0.58
+Check Op. Cap:           243
+Removed DLO:             []
+Duration strat.:         U(60,120)
+Rank strat.:             U(1,100)
+Memory strat.:           SUM_DIV_DLOS
+Check Op. strat.:        SUM_DIV_ORBITS
+Mem start/end strat.:    U(10,80)-U(10,80)

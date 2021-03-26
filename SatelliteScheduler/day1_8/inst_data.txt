@@ -1,0 +1,15 @@
+Instance:                day1_8
+AR number:               500
+DTO number:              989
+DLO number:              25
+Days:                    1
+Memory Cap (GB):         9
+Mem start %:             0.45
+Mem end %:               0.59
+Check Op. Cap:           3
+Removed DLO:             []
+Duration strat.:         U(3,30)
+Rank strat.:             PROPORTIONAL_MEM_X_USERID_FACTOR_NOISED
+Memory strat.:           SUM_DIV_5_DLOS
+Check Op. strat.:        SUM_DIV_10_ORBITS
+Mem start/end strat.:    U(10,80)-U(10,80)

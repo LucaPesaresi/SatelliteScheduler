@@ -1,0 +1,15 @@
+Instance:                day1_3
+AR number:               2000
+DTO number:              3859
+DLO number:              14
+Days:                    1
+Memory Cap (GB):         1082
+Mem start %:             0.38
+Mem end %:               0.39
+Check Op. Cap:           2000
+Removed DLO:             ['NW-Svalbard']
+Duration strat.:         U(3,120)
+Rank strat.:             U(1,100)
+Memory strat.:           SUM_DIV_ORBITS
+Check Op. strat.:        SUM_DIV_DAYS
+Mem start/end strat.:    U(10,80)-U(10,80)

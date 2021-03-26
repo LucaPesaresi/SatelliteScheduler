@@ -1,0 +1,15 @@
+Instance:                day1_4
+AR number:               1000
+DTO number:              1977
+DLO number:              25
+Days:                    1
+Memory Cap (GB):         325
+Mem start %:             0.3
+Mem end %:               0.7
+Check Op. Cap:           67
+Removed DLO:             []
+Duration strat.:         U(3,120)
+Rank strat.:             PROPORTIONAL_MEM_X_USERID_FACTOR_NOISED
+Memory strat.:           SUM_DIV_DLOS
+Check Op. strat.:        SUM_DIV_ORBITS
+Mem start/end strat.:    U(10,80)-U(10,80)

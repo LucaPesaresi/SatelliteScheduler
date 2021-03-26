@@ -1,0 +1,15 @@
+Instance:                day1_9
+AR number:               500
+DTO number:              976
+DLO number:              4
+Days:                    1
+Memory Cap (GB):         298
+Mem start %:             0.28
+Mem end %:               0.28
+Check Op. Cap:           33
+Removed DLO:             ['NW-Svalbard', 'AN-Troll']
+Duration strat.:         U(60,120)
+Rank strat.:             0.01xU(1000,2000)+0.99xPROPORTIONAL_MEM_X_USERID_FACTOR_NOISED
+Memory strat.:           SUM_DIV_5_DLOS
+Check Op. strat.:        SUM_DIV_ORBITS
+Mem start/end strat.:    U(10,80)-U(10,80)
