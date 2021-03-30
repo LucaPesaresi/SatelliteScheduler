@@ -7,43 +7,40 @@ namespace SatelliteScheduler
 {
     class Tuner
     {
-        int k_start, k_stop, k_inc, k_best;
-        int noise_start, noise_stop, noise_inc, noise_best;
+        int k_start, k_stop, k_inc, k_step, k_best;
+        int noise_start, noise_stop, noise_inc, noise_step, noise_best;
+        Instance instance;
+        Plan plan;
 
         public Tuner(Instance instance, Plan plan)
         {
-            k_start = 1; k_stop = 100; 
-            k_inc = Convert.ToInt32(k_stop / 3);
+            this.instance = instance;
+            this.plan = plan;
+        }
 
-            noise_start = 1; noise_stop = 100; 
-            noise_inc = Convert.ToInt32(noise_stop / 3);
+        public void BuildRR(int k_start, int k_stop, int k_step, 
+            int n_start, int n_stop, int n_step)
+        {
+            this.k_start = k_start;
+            this.k_stop = k_stop;
+            this.k_step = k_step;
 
-            bool loop = true;
+            noise_start = n_start;
+            noise_stop = n_stop;
+            noise_step = n_step;
+
+            k_inc = (k_stop - k_start) / k_step;
+            noise_inc = (noise_stop - noise_start) / noise_step;
+
             Console.WriteLine("\nTuning Ruin&Recreate");
+            bool loop = true;
             while (loop)
             {
-                loop = SetBestParamsRR(TuningRR(instance));
+                loop = SetBestParamsRR(TuningRR());
             }
-            Console.WriteLine("\nTuning Simulated Annealing");
-            TuningSA(instance, plan);
         }
 
-        public Quality MediumQuality(Instance ins, int k, int noise)
-        {
-            List<Plan> Plist = new List<Plan>();
-            for (int i = 0; i < 1; i++)
-            {
-                Plist.Add(RuinRecreate(ins, k, noise));
-            }
-
-            double n_ar = Math.Round(Plist.Select(p => p.QualityPlan().n_ar).Average(), 2);
-            double tot_rank = Math.Round(Plist.Select(p => p.QualityPlan().tot_rank).Average(), 2);
-            double memory = Math.Round(Plist.Select(p => p.QualityPlan().memory).Average(), 2);
-
-            return new Quality(n_ar, tot_rank, memory, k, noise);
-        }
-
-        public Quality TuningRR(Instance instance)
+        public Quality TuningRR()
         {
             Quality Qbest = new Quality(0, 0, 0, 0, 0);
 
@@ -51,7 +48,7 @@ namespace SatelliteScheduler
             {
                 for (int noise = noise_start; noise <= noise_stop; noise += noise_inc)
                 {
-                    Quality Qnew = MediumQuality(instance, k, noise);
+                    Quality Qnew = MediumQuality(k, noise);
 
                     if (Qbest.tot_rank < Qnew.tot_rank)
                     {
@@ -63,6 +60,21 @@ namespace SatelliteScheduler
             }
             return Qbest;
         }
+       
+        public Quality MediumQuality(int k, int noise)
+        {
+            List<Plan> Plist = new List<Plan>();
+            for (int i = 0; i < 3; i++)
+            {
+                Plist.Add(RuinRecreate(k, noise));
+            }
+
+            double n_ar = Math.Round(Plist.Select(p => p.QualityPlan().n_ar).Average(), 2);
+            double tot_rank = Math.Round(Plist.Select(p => p.QualityPlan().tot_rank).Average(), 2);
+            double memory = Math.Round(Plist.Select(p => p.QualityPlan().memory).Average(), 2);
+
+            return new Quality(n_ar, tot_rank, memory, k, noise);
+        }
 
         public bool SetBestParamsRR(Quality Q)
         {
@@ -70,73 +82,71 @@ namespace SatelliteScheduler
                 "\t" + noise_start + "\t" + noise_stop + "\t" + noise_inc);
             Q.PrintQualityRR();
 
-            if (Q.k - k_inc < 0) { k_start = 1; } else { k_start = Q.k - k_inc; }
-            if (Q.k + k_inc > 100) { k_stop = 100; } else { k_stop = Q.k + k_inc; }
+            if (Q.k - k_inc <= 0) { k_start = 1; } else { k_start = Q.k - k_inc; }
+            if (Q.k + k_inc >= 100) { k_stop = 100; } else { k_stop = Q.k + k_inc; }
 
             if (Q.noise - noise_inc < 0) { noise_start = 1; } else { noise_start = Q.noise - noise_inc; }
             if (Q.noise + noise_inc > 100) { noise_stop = 100; } else { noise_stop = Q.noise + noise_inc; }
 
-            k_inc = Convert.ToInt32((k_stop - k_start) / 4);
-            noise_inc = Convert.ToInt32((noise_stop - noise_start) / 4);
-            if (k_stop - k_start <= 5 || noise_stop - noise_start <= 5)
+            int k_diff = k_stop - k_start;
+            int n_diff = noise_stop - noise_start;
+
+            k_inc = Convert.ToInt32(k_diff / k_step);
+            noise_inc = Convert.ToInt32(n_diff / k_step);
+            if (k_diff <= 5 || n_diff <= 5)
             {
                 k_best = Q.k;
                 noise_best = Q.noise;
                 return false;
             }
-
             return true;
         }
 
-        public Plan RuinRecreate(Instance instance, int k, int noise)
+        public Plan RuinRecreate(int k, int noise)
         {
-            Plan best_plan = Euristics.CreateInitialPlan(instance, noise, 100);
+            Plan best_plan = Heuristics.CreateInitialPlan(instance, noise, 100);
             for (int i = 0; i < 100; i++)
             {
                 Plan star_plan = Plan.Copy(best_plan);
-                star_plan = Euristics.Ruin(instance, star_plan, k);
-                star_plan = Euristics.Recreate(instance, star_plan, noise);
-                best_plan = Euristics.CompareRR(best_plan, star_plan);
+                star_plan = Heuristics.Ruin(instance, star_plan, k);
+                star_plan = Heuristics.Recreate(instance, star_plan, noise);
+                best_plan = Heuristics.CompareRR(best_plan, star_plan);
             }
             return best_plan;
         }
 
-        public void TuningSA(Instance instance, Plan best_plan)
+        public void TuningSA(double temp_start, double temp_stop, int temp_inc)
         {
-            Plan current_plan = Plan.Copy(best_plan);
-
+            Console.WriteLine("\nTuning Simulated Annealing");
+            Quality Qbest = new Quality(0, 0, 0, 0.0, 0);
             //Writer("testSA_0.001-100.txt", "temp-factor;n_ar;tot_rank,memory");
 
-            Quality Qbest = new Quality(0, 0, 0, 0.0, 0);
-
-            for (double temp = 0.0001; temp < 1; temp*=10)
+            for (double temp = temp_start; temp < temp_stop; temp *= temp_inc)
             {
-                for (int it = 100; it <= 10000; it*=10)
+                List<Plan> list = new List<Plan>();
+                for (int j = 0; j < 10; j++)
                 {
-                    List<Plan> list = new List<Plan>();
-                    for (int j = 0; j < 10; j++)
-                    {
-                        list.Add(SA(instance, best_plan, temp, it));
-                    }
+                    list.Add(SA(temp));
+                }
 
-                    double n_ar = Math.Round(list.Select(p => p.QualityPlan().n_ar).Average(), 2);
-                    double tot_rank = Math.Round(list.Select(p => p.QualityPlan().tot_rank).Average(), 2);
-                    double memory = Math.Round(list.Select(p => p.QualityPlan().memory).Average(), 2);
-                    
-                    Quality Qnew = new Quality(n_ar, tot_rank, memory, temp, it);
-                    if (Qbest.tot_rank < Qnew.tot_rank)
-                    {
-                        Qbest = Qnew;
-                        Qbest.PrintQualitySA();
-                    }
+                double n_ar = Math.Round(list.Select(p => p.QualityPlan().n_ar).Average(), 2);
+                double tot_rank = Math.Round(list.Select(p => p.QualityPlan().tot_rank).Average(), 2);
+                double memory = Math.Round(list.Select(p => p.QualityPlan().memory).Average(), 2);
+
+                Quality Qnew = new Quality(n_ar, tot_rank, memory, temp, 100);
+                if (Qbest.tot_rank < Qnew.tot_rank)
+                {
+                    Qbest = Qnew;
+                    Qbest.PrintQualitySA();
                 }
                 //string line = temp + ";" + n_ar + ";" + tot_rank + ";" + memory;        
                 //Writer("testSA_0001-0010.txt", line);            
             }
         }
 
-        public Plan SA(Instance instance, Plan best_plan, double temp_max, int max_it = 1000)
+        public Plan SA(double temp_max, int max_it = 100)
         {
+            Plan best_plan = plan;
             double best_obj = best_plan.QualityPlan().tot_rank;
             double t0 = best_obj * temp_max;
             double tf = t0 * temp_max;
@@ -148,14 +158,14 @@ namespace SatelliteScheduler
             for (int i = 0; i < max_it; i++)
             {
                 Plan neighbor_plan = Plan.Copy(current_plan);
-                neighbor_plan = Euristics.Ruin(instance, neighbor_plan, k_best);
-                neighbor_plan = Euristics.Recreate(instance, neighbor_plan, noise_best);
-                List<Plan> ps = Euristics.CompareSA(best_plan, neighbor_plan, current_plan, t);
+                neighbor_plan = Heuristics.Ruin(instance, neighbor_plan, k_best);
+                neighbor_plan = Heuristics.Recreate(instance, neighbor_plan, noise_best);
+                List<Plan> ps = Heuristics.CompareSA(best_plan, neighbor_plan, current_plan, t);
 
                 best_plan = (ps[0] != null) ? Plan.Copy(ps[0]) : best_plan;
                 current_plan = (ps[1] != null) ? Plan.Copy(ps[1]) : current_plan;
 
-                t*= c;
+                t *= c;
             }
             //best_plan.QualityPlan().PrintQualitySA();
             return best_plan;

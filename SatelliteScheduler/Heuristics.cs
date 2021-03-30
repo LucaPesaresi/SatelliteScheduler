@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SatelliteScheduler
 {
-    class Euristics
+    class Heuristics
     {
 
         public static Plan CreateInitialPlan(Instance instance, double noise, int max_it) {

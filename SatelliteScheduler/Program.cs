@@ -19,7 +19,7 @@ namespace SatelliteScheduler
             //SetParams(args);
 
             args = new string[] { "0", "0", "0", "0", "0" };
-            args[0] = Environment.CurrentDirectory + @"\day1_1\";
+            args[0] = Environment.CurrentDirectory + @"\day1_0\";
 
             string ars = System.IO.File.ReadAllText(args[0] + "ARs.json");
             string dtos = System.IO.File.ReadAllText(args[0] + "DTOs.json");
@@ -61,19 +61,22 @@ namespace SatelliteScheduler
             plan_rankmem.BuildPlan();
             plan_rankmem.QualityPlan().PrintQuality();
 
-            //Console.WriteLine("\nTest Piano in ordine di rank/memoria disturbato");
-            Plan plan_noisyrankmem = Euristics.CreateInitialPlan(instance, noise, max_it);
-            //plan_noisyrankmem.QualityPlan().PrintQuality();
+            Console.WriteLine("\nTest Piano in ordine di rank/memoria disturbato");
+            Plan plan_noisyrankmem = Heuristics.CreateInitialPlan(instance, noise, max_it);
+            plan_noisyrankmem.QualityPlan().PrintQuality();
 
-            Plan rr = RuinRecreate(instance, plan_noisyrankmem, max_it);
-            Console.WriteLine("--------------------------------");
-            rr.QualityPlan().PrintQuality();
+            //Plan rr = RuinRecreate(instance, plan_noisyrankmem, max_it);
+            //Console.WriteLine("--------------------------------");
+            //rr.QualityPlan().PrintQuality();
 
-            Plan sa = SA(instance, plan_noisyrankmem, t_max, max_it);
-            Console.WriteLine("--------------------------------");
-            sa.QualityPlan().PrintQuality();
+            //Plan sa = SA(instance, plan_noisyrankmem, t_max, max_it);
+            //Console.WriteLine("--------------------------------");
+            //sa.QualityPlan().PrintQuality();
 
-            //Tuner T = new Tuner(instance, plan_noisyrankmem);
+            Tuner T = new Tuner(instance, plan_noisyrankmem);
+            T.BuildRR(10, 40, 3, 10, 40, 3);
+            T.TuningSA(0.00001, 1, 10);
+
         }
 
         // Apllica l'algoritmo Ruin&Recreate per ottenere un'ipotetica soluzione migliore
@@ -85,9 +88,9 @@ namespace SatelliteScheduler
             for (int i = 0; i < max_it; i++)
             {
                 Plan star_plan = Plan.Copy(best_plan);
-                star_plan = Euristics.Ruin(instance, star_plan, k_ruin);
-                star_plan = Euristics.Recreate(instance, star_plan, noise);
-                best_plan = Euristics.CompareRR(best_plan, star_plan);
+                star_plan = Heuristics.Ruin(instance, star_plan, k_ruin);
+                star_plan = Heuristics.Recreate(instance, star_plan, noise);
+                best_plan = Heuristics.CompareRR(best_plan, star_plan);
             }
             return best_plan;
         }
@@ -109,9 +112,9 @@ namespace SatelliteScheduler
             for (int i = 0; i < max_it; i++)
             {
                 Plan neighbor_plan = Plan.Copy(current_plan);
-                neighbor_plan = Euristics.Ruin(instance, neighbor_plan, k_ruin);
-                neighbor_plan = Euristics.Recreate(instance, neighbor_plan, noise);
-                List<Plan> ps = Euristics.CompareSA(best_plan, neighbor_plan, current_plan, t);
+                neighbor_plan = Heuristics.Ruin(instance, neighbor_plan, k_ruin);
+                neighbor_plan = Heuristics.Recreate(instance, neighbor_plan, noise);
+                List<Plan> ps = Heuristics.CompareSA(best_plan, neighbor_plan, current_plan, t);
 
                 best_plan = (ps[0] != null) ? Plan.Copy(ps[0]) : best_plan;
                 current_plan = (ps[1] != null) ? Plan.Copy(ps[1]) : current_plan;
