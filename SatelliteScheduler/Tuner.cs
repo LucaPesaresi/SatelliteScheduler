@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Diagnostics;
 
 namespace SatelliteScheduler
 {
@@ -33,11 +34,16 @@ namespace SatelliteScheduler
             noise_inc = (noise_stop - noise_start) / noise_step;
 
             Console.WriteLine("\nTuning Ruin&Recreate");
-            bool loop = true;
-            while (loop)
+            for (int i = 0; i < 3; i++)
             {
-                loop = SetBestParamsRR(TuningRR());
-            }
+                Console.WriteLine("-----------GIRO-"+ (i+1) + "---------------");
+                
+                Stopwatch watch = Stopwatch.StartNew();
+                SetBestParamsRR(TuningRR());
+                watch.Stop();
+                var elapsedMs = watch.ElapsedMilliseconds;
+                Console.WriteLine("Tempo: " + elapsedMs + " ms");
+        }
         }
 
         public Quality TuningRR()
@@ -53,6 +59,7 @@ namespace SatelliteScheduler
                     if (Qbest.tot_rank < Qnew.tot_rank)
                     {
                         Qbest = Qnew;
+                        Qbest.PrintQualityRR();
                     }
                     //string line = k + ";" + noise + ";" + n_ar + ";" + tot_rank + ";" + memory;
                     //Writer("testRR_15-30.txt", line);
@@ -76,11 +83,11 @@ namespace SatelliteScheduler
             return new Quality(n_ar, tot_rank, memory, k, noise);
         }
 
-        public bool SetBestParamsRR(Quality Q)
+        public void SetBestParamsRR(Quality Q)
         {
-            Console.WriteLine("\n" + k_start + "\t" + k_stop + "\t" + k_inc +
-                "\t" + noise_start + "\t" + noise_stop + "\t" + noise_inc);
-            Q.PrintQualityRR();
+            //Console.WriteLine("\n" + k_start + "\t" + k_stop + "\t" + k_inc +
+            //    "\t" + noise_start + "\t" + noise_stop + "\t" + noise_inc);
+            //Q.PrintQualityRR();
 
             if (Q.k - k_inc <= 0) { k_start = 1; } else { k_start = Q.k - k_inc; }
             if (Q.k + k_inc >= 100) { k_stop = 100; } else { k_stop = Q.k + k_inc; }
@@ -92,14 +99,10 @@ namespace SatelliteScheduler
             int n_diff = noise_stop - noise_start;
 
             k_inc = Convert.ToInt32(k_diff / k_step);
-            noise_inc = Convert.ToInt32(n_diff / k_step);
-            if (k_diff <= 5 || n_diff <= 5)
-            {
-                k_best = Q.k;
-                noise_best = Q.noise;
-                return false;
-            }
-            return true;
+            noise_inc = Convert.ToInt32(n_diff / noise_step);
+
+            k_best = Q.k;
+            noise_best = Q.noise;
         }
 
         public Plan RuinRecreate(int k, int noise)
@@ -118,13 +121,14 @@ namespace SatelliteScheduler
         public void TuningSA(double temp_start, double temp_stop, int temp_inc)
         {
             Console.WriteLine("\nTuning Simulated Annealing");
+            Stopwatch watch = Stopwatch.StartNew();
             Quality Qbest = new Quality(0, 0, 0, 0.0, 0);
             //Writer("testSA_0.001-100.txt", "temp-factor;n_ar;tot_rank,memory");
 
-            for (double temp = temp_start; temp < temp_stop; temp *= temp_inc)
+            for (double temp = temp_start; temp <= temp_stop; temp *= temp_inc)
             {
                 List<Plan> list = new List<Plan>();
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < 3; j++)
                 {
                     list.Add(SA(temp));
                 }
@@ -142,6 +146,9 @@ namespace SatelliteScheduler
                 //string line = temp + ";" + n_ar + ";" + tot_rank + ";" + memory;        
                 //Writer("testSA_0001-0010.txt", line);            
             }
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            Console.WriteLine("Tempo: " + elapsedMs + " ms");
         }
 
         public Plan SA(double temp_max, int max_it = 100)

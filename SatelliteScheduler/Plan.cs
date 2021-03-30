@@ -47,19 +47,20 @@ namespace SatelliteScheduler
 
             for (; i < instance.GetARDTOs().Count; i++)
             {
+                ARDTO newArdto = instance.GetARDTO(i);
                 ok = true;
                 int j;
                 for (j = 0; j < plan.Count; j++)
-                {
+                { 
                     //controllo che non ci sia un overlap temporale con i precedenti
-                    if (instance.GetARDTO(i).stop_time >= plan[j].start_time &&
-                        instance.GetARDTO(i).start_time <= plan[j].stop_time)
+                    if (newArdto.stop_time >= plan[j].start_time &&
+                        newArdto.start_time <= plan[j].stop_time)
                     {
                         ok = false;
                         break;
                     }
                     //controllo che l'id_ar non sia già presente in quelli aggiunti
-                    if (instance.GetARDTO(i).id_ar == plan[j].id_ar)
+                    if (newArdto.id_ar == plan[j].id_ar)
                     {
                         ok = false;
                         break;
@@ -68,11 +69,11 @@ namespace SatelliteScheduler
                 if (ok)
                 {
                     //controllo memoria libera
-                    if (current_mem + instance.GetARDTO(i).memory <= instance.GetMaxMem())
+                    if (current_mem + newArdto.memory <= instance.GetMaxMem())
                     {
                         //ardto[i].PrintAll();
-                        plan.Add(instance.GetARDTO(i));
-                        current_mem += instance.GetARDTO(i).memory;
+                        plan.Add(newArdto);
+                        current_mem += newArdto.memory;
                     }
                 }
             }
@@ -151,13 +152,13 @@ namespace SatelliteScheduler
         public void PrintQualityRR()
         {
             Console.WriteLine(k.ToString() + "\t" + noise + "\t" + n_ar + "\t" 
-                + tot_rank + "\t" + memory + "\t" + tot_memory);
+                + tot_rank + "\t" + memory);
         }
 
         public void PrintQualitySA()
         {
             Console.WriteLine(temp + "\t" + it_max + "\t" + n_ar + "\t" 
-                + tot_rank + "\t" + memory + "\t" + tot_memory);
+                + tot_rank + "\t" + memory);
         }
     }
 }

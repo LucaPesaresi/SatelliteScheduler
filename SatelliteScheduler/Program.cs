@@ -6,10 +6,10 @@ namespace SatelliteScheduler
     class Program
     {
         public static double max_mem;
-        public static int seed = 2;
-        public static int k_ruin = 20;
-        public static int noise = 15;
-        public static double t_max = 0.01;
+        public static int seed = 0;
+        public static int k_ruin = 50;
+        public static int noise = 50;
+        public static double t_max = 0.001;
         public static int max_it = 1000;
 
         static void Main(string[] args)
@@ -74,7 +74,7 @@ namespace SatelliteScheduler
             //sa.QualityPlan().PrintQuality();
 
             Tuner T = new Tuner(instance, plan_noisyrankmem);
-            T.BuildRR(10, 40, 3, 10, 40, 3);
+            T.BuildRR(1, 100, 3, 1, 100, 3);
             T.TuningSA(0.00001, 1, 10);
 
         }
