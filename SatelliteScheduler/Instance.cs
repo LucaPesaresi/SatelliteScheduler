@@ -13,6 +13,7 @@ namespace SatelliteScheduler
         private readonly double max_mem;
         private List<ARDTO> ar_dto;
         private Random rnd;
+        private readonly double max_rank;
 
         public Instance(string ars, string dtos, string consts, int seed)
         {
@@ -24,6 +25,7 @@ namespace SatelliteScheduler
             rnd = new Random(seed);
 
             max_mem = constlist.MEMORY_CAP;
+            max_rank = constlist.RANK;
 
             //merge AR con DTO
             ar_dto = new List<ARDTO>();
@@ -35,6 +37,8 @@ namespace SatelliteScheduler
 
         }
         public double GetMaxMem() { return max_mem; }
+
+        public double GetMaxRank() { return max_rank; }
 
         public void SortARDTOsByMemory() 
         {
@@ -77,5 +81,6 @@ namespace SatelliteScheduler
         {
             return rnd;
         }
+
     }
 }

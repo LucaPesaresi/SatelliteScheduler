@@ -1,1 +1,356 @@
-{"MEMORY_CAP": 1082, "OPERATIVE_PROFILE_CAP": 2000, "MISSION_HORIZON_DURATION": 86400, "MAX_INCIDENCE": 40.0, "MIN_INCIDENCE": 20.0, "INCIDENCE_FILTER_IS_NOT_ACTIVE": false, "DLO_FILTER_IS_ACTIVE": true, "PAW_FILTER_IS_ACTIVE": true, "DOWNLINK_RATE": 0.064, "ACQ_TIME_GAP": 10, "STABILIZATION_TIME": 10, "INITIAL_PITCH": 0, "INITIAL_ROLL": 0, "INITIAL_YAW": 0, "PITCH_ANGULAR_VELOCITY": 0.35, "ROLL_ANGULAR_VELOCITY": 0.5, "YAW_ANGULAR_VELOCITY": 0.5, "INITIAL_ROLL_DLO": -30, "FINAL_ROLL_DLO": -30, "ORBIT_PERIOD": 5820, "PAW_INITIAL_PITCH": 0, "PAW_INITIAL_ROLL": -30, "PAW_INITIAL_YAW": 0, "PAW_FINAL_PITCH": 0, "PAW_FINAL_ROLL": -30, "PAW_FINAL_YAW": 0, "memoryFromPreviousPlan": [{"ARID": 1, "memory": 1.452, "rank": 48, "highPriority": false}, {"ARID": 2, "memory": 4.62, "rank": 11, "highPriority": false}, {"ARID": 3, "memory": 12.936, "rank": 100, "highPriority": false}, {"ARID": 4, "memory": 15.708, "rank": 75, "highPriority": false}, {"ARID": 5, "memory": 4.884, "rank": 59, "highPriority": false}, {"ARID": 6, "memory": 4.488, "rank": 42, "highPriority": false}, {"ARID": 7, "memory": 0.924, "rank": 65, "highPriority": false}, {"ARID": 8, "memory": 10.296, "rank": 95, "highPriority": false}, {"ARID": 9, "memory": 1.32, "rank": 23, "highPriority": false}, {"ARID": 10, "memory": 8.976, "rank": 48, "highPriority": false}, {"ARID": 11, "memory": 14.916, "rank": 15, "highPriority": false}, {"ARID": 12, "memory": 7.656, "rank": 99, "highPriority": false}, {"ARID": 13, "memory": 12.672, "rank": 36, "highPriority": false}, {"ARID": 14, "memory": 2.244, "rank": 99, "highPriority": false}, {"ARID": 15, "memory": 6.072, "rank": 97, "highPriority": false}, {"ARID": 16, "memory": 1.584, "rank": 42, "highPriority": false}, {"ARID": 17, "memory": 4.356, "rank": 14, "highPriority": false}, {"ARID": 18, "memory": 6.204, "rank": 51, "highPriority": false}, {"ARID": 19, "memory": 5.016, "rank": 91, "highPriority": false}, {"ARID": 20, "memory": 8.184, "rank": 15, "highPriority": false}, {"ARID": 21, "memory": 13.86, "rank": 91, "highPriority": false}, {"ARID": 22, "memory": 2.904, "rank": 40, "highPriority": false}, {"ARID": 23, "memory": 11.352, "rank": 10, "highPriority": false}, {"ARID": 24, "memory": 6.336, "rank": 77, "highPriority": false}, {"ARID": 25, "memory": 1.188, "rank": 70, "highPriority": false}, {"ARID": 26, "memory": 8.712, "rank": 40, "highPriority": false}, {"ARID": 27, "memory": 9.636, "rank": 40, "highPriority": false}, {"ARID": 28, "memory": 7.656, "rank": 55, "highPriority": false}, {"ARID": 29, "memory": 3.036, "rank": 95, "highPriority": false}, {"ARID": 30, "memory": 6.204, "rank": 86, "highPriority": false}, {"ARID": 31, "memory": 6.204, "rank": 67, "highPriority": false}, {"ARID": 32, "memory": 10.824, "rank": 2, "highPriority": false}, {"ARID": 33, "memory": 7.128, "rank": 42, "highPriority": false}, {"ARID": 34, "memory": 8.844, "rank": 98, "highPriority": false}, {"ARID": 35, "memory": 9.636, "rank": 62, "highPriority": false}, {"ARID": 36, "memory": 3.696, "rank": 58, "highPriority": false}, {"ARID": 37, "memory": 3.3, "rank": 71, "highPriority": false}, {"ARID": 38, "memory": 10.956, "rank": 97, "highPriority": false}, {"ARID": 39, "memory": 8.184, "rank": 24, "highPriority": false}, {"ARID": 40, "memory": 6.336, "rank": 87, "highPriority": false}, {"ARID": 41, "memory": 13.068, "rank": 17, "highPriority": false}, {"ARID": 42, "memory": 13.728, "rank": 14, "highPriority": false}, {"ARID": 43, "memory": 11.22, "rank": 17, "highPriority": false}, {"ARID": 44, "memory": 10.692, "rank": 16, "highPriority": false}, {"ARID": 45, "memory": 3.828, "rank": 17, "highPriority": false}, {"ARID": 46, "memory": 4.62, "rank": 55, "highPriority": false}, {"ARID": 47, "memory": 6.468, "rank": 40, "highPriority": false}, {"ARID": 48, "memory": 14.52, "rank": 95, "highPriority": false}, {"ARID": 49, "memory": 4.752, "rank": 10, "highPriority": false}, {"ARID": 50, "memory": 13.728, "rank": 47, "highPriority": false}, {"ARID": 51, "memory": 8.712, "rank": 51, "highPriority": false}, {"ARID": 52, "memory": 10.956, "rank": 28, "highPriority": false}, {"ARID": 53, "memory": 7.26, "rank": 14, "highPriority": false}, {"ARID": 54, "memory": 7.656, "rank": 48, "highPriority": false}], "FINAL_SATELLITE_MEMORY": 0.39}
+{
+  "ACQ_TIME_GAP": 10,
+  "DLO_FILTER_IS_ACTIVE": true,
+  "DOWNLINK_RATE": 0.064,
+  "FINAL_ROLL_DLO": -30,
+  "FINAL_SATELLITE_MEMORY": 0.39,
+  "INCIDENCE_FILTER_IS_NOT_ACTIVE": false,
+  "INITIAL_PITCH": 0,
+  "INITIAL_ROLL": 0,
+  "INITIAL_ROLL_DLO": -30,
+  "INITIAL_YAW": 0,
+  "MAX_INCIDENCE": 40.0,
+  "MEMORY_CAP": 1082,
+  "RANK": 23010,
+  "memoryFromPreviousPlan": [
+    {
+      "ARID": 1,
+      "memory": 1.452,
+      "rank": 48,
+      "highPriority": false
+    },
+    {
+      "ARID": 2,
+      "memory": 4.62,
+      "rank": 11,
+      "highPriority": false
+    },
+    {
+      "ARID": 3,
+      "memory": 12.936,
+      "rank": 100,
+      "highPriority": false
+    },
+    {
+      "ARID": 4,
+      "memory": 15.708,
+      "rank": 75,
+      "highPriority": false
+    },
+    {
+      "ARID": 5,
+      "memory": 4.884,
+      "rank": 59,
+      "highPriority": false
+    },
+    {
+      "ARID": 6,
+      "memory": 4.488,
+      "rank": 42,
+      "highPriority": false
+    },
+    {
+      "ARID": 7,
+      "memory": 0.924,
+      "rank": 65,
+      "highPriority": false
+    },
+    {
+      "ARID": 8,
+      "memory": 10.296,
+      "rank": 95,
+      "highPriority": false
+    },
+    {
+      "ARID": 9,
+      "memory": 1.32,
+      "rank": 23,
+      "highPriority": false
+    },
+    {
+      "ARID": 10,
+      "memory": 8.976,
+      "rank": 48,
+      "highPriority": false
+    },
+    {
+      "ARID": 11,
+      "memory": 14.916,
+      "rank": 15,
+      "highPriority": false
+    },
+    {
+      "ARID": 12,
+      "memory": 7.656,
+      "rank": 99,
+      "highPriority": false
+    },
+    {
+      "ARID": 13,
+      "memory": 12.672,
+      "rank": 36,
+      "highPriority": false
+    },
+    {
+      "ARID": 14,
+      "memory": 2.244,
+      "rank": 99,
+      "highPriority": false
+    },
+    {
+      "ARID": 15,
+      "memory": 6.072,
+      "rank": 97,
+      "highPriority": false
+    },
+    {
+      "ARID": 16,
+      "memory": 1.584,
+      "rank": 42,
+      "highPriority": false
+    },
+    {
+      "ARID": 17,
+      "memory": 4.356,
+      "rank": 14,
+      "highPriority": false
+    },
+    {
+      "ARID": 18,
+      "memory": 6.204,
+      "rank": 51,
+      "highPriority": false
+    },
+    {
+      "ARID": 19,
+      "memory": 5.016,
+      "rank": 91,
+      "highPriority": false
+    },
+    {
+      "ARID": 20,
+      "memory": 8.184,
+      "rank": 15,
+      "highPriority": false
+    },
+    {
+      "ARID": 21,
+      "memory": 13.86,
+      "rank": 91,
+      "highPriority": false
+    },
+    {
+      "ARID": 22,
+      "memory": 2.904,
+      "rank": 40,
+      "highPriority": false
+    },
+    {
+      "ARID": 23,
+      "memory": 11.352,
+      "rank": 10,
+      "highPriority": false
+    },
+    {
+      "ARID": 24,
+      "memory": 6.336,
+      "rank": 77,
+      "highPriority": false
+    },
+    {
+      "ARID": 25,
+      "memory": 1.188,
+      "rank": 70,
+      "highPriority": false
+    },
+    {
+      "ARID": 26,
+      "memory": 8.712,
+      "rank": 40,
+      "highPriority": false
+    },
+    {
+      "ARID": 27,
+      "memory": 9.636,
+      "rank": 40,
+      "highPriority": false
+    },
+    {
+      "ARID": 28,
+      "memory": 7.656,
+      "rank": 55,
+      "highPriority": false
+    },
+    {
+      "ARID": 29,
+      "memory": 3.036,
+      "rank": 95,
+      "highPriority": false
+    },
+    {
+      "ARID": 30,
+      "memory": 6.204,
+      "rank": 86,
+      "highPriority": false
+    },
+    {
+      "ARID": 31,
+      "memory": 6.204,
+      "rank": 67,
+      "highPriority": false
+    },
+    {
+      "ARID": 32,
+      "memory": 10.824,
+      "rank": 2,
+      "highPriority": false
+    },
+    {
+      "ARID": 33,
+      "memory": 7.128,
+      "rank": 42,
+      "highPriority": false
+    },
+    {
+      "ARID": 34,
+      "memory": 8.844,
+      "rank": 98,
+      "highPriority": false
+    },
+    {
+      "ARID": 35,
+      "memory": 9.636,
+      "rank": 62,
+      "highPriority": false
+    },
+    {
+      "ARID": 36,
+      "memory": 3.696,
+      "rank": 58,
+      "highPriority": false
+    },
+    {
+      "ARID": 37,
+      "memory": 3.3,
+      "rank": 71,
+      "highPriority": false
+    },
+    {
+      "ARID": 38,
+      "memory": 10.956,
+      "rank": 97,
+      "highPriority": false
+    },
+    {
+      "ARID": 39,
+      "memory": 8.184,
+      "rank": 24,
+      "highPriority": false
+    },
+    {
+      "ARID": 40,
+      "memory": 6.336,
+      "rank": 87,
+      "highPriority": false
+    },
+    {
+      "ARID": 41,
+      "memory": 13.068,
+      "rank": 17,
+      "highPriority": false
+    },
+    {
+      "ARID": 42,
+      "memory": 13.728,
+      "rank": 14,
+      "highPriority": false
+    },
+    {
+      "ARID": 43,
+      "memory": 11.22,
+      "rank": 17,
+      "highPriority": false
+    },
+    {
+      "ARID": 44,
+      "memory": 10.692,
+      "rank": 16,
+      "highPriority": false
+    },
+    {
+      "ARID": 45,
+      "memory": 3.828,
+      "rank": 17,
+      "highPriority": false
+    },
+    {
+      "ARID": 46,
+      "memory": 4.62,
+      "rank": 55,
+      "highPriority": false
+    },
+    {
+      "ARID": 47,
+      "memory": 6.468,
+      "rank": 40,
+      "highPriority": false
+    },
+    {
+      "ARID": 48,
+      "memory": 14.52,
+      "rank": 95,
+      "highPriority": false
+    },
+    {
+      "ARID": 49,
+      "memory": 4.752,
+      "rank": 10,
+      "highPriority": false
+    },
+    {
+      "ARID": 50,
+      "memory": 13.728,
+      "rank": 47,
+      "highPriority": false
+    },
+    {
+      "ARID": 51,
+      "memory": 8.712,
+      "rank": 51,
+      "highPriority": false
+    },
+    {
+      "ARID": 52,
+      "memory": 10.956,
+      "rank": 28,
+      "highPriority": false
+    },
+    {
+      "ARID": 53,
+      "memory": 7.26,
+      "rank": 14,
+      "highPriority": false
+    },
+    {
+      "ARID": 54,
+      "memory": 7.656,
+      "rank": 48,
+      "highPriority": false
+    }
+  ],
+  "MIN_INCIDENCE": 20.0,
+  "MISSION_HORIZON_DURATION": 86400,
+  "OPERATIVE_PROFILE_CAP": 2000,
+  "ORBIT_PERIOD": 5820,
+  "PAW_FILTER_IS_ACTIVE": true,
+  "PAW_FINAL_PITCH": 0,
+  "PAW_FINAL_ROLL": -30,
+  "PAW_FINAL_YAW": 0,
+  "PAW_INITIAL_PITCH": 0,
+  "PAW_INITIAL_ROLL": -30,
+  "PAW_INITIAL_YAW": 0,
+  "PITCH_ANGULAR_VELOCITY": 0.35,
+  "ROLL_ANGULAR_VELOCITY": 0.5,
+  "STABILIZATION_TIME": 10,
+  "YAW_ANGULAR_VELOCITY": 0.5
+}

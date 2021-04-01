@@ -36,6 +36,7 @@ public class JsonCaster
     public class Costants
     {
         public int MEMORY_CAP { get; set; }
+        public int RANK { get; set; }
         public int OPERATIVE_PROFILE_CAP { get; set; }
         public int MISSION_HORIZON_DURATION { get; set; }
         public double MAX_INCIDENCE { get; set; }

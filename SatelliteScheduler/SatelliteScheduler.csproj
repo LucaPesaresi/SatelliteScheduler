@@ -10,6 +10,35 @@
     <None Remove="day1_0\ARs.json" />
     <None Remove="day1_0\constants.json" />
     <None Remove="day1_0\DTOs.json" />
+    <None Remove="day1_1\ARs.json" />
+    <None Remove="day1_1\Best_params.json" />
+    <None Remove="day1_1\constants.json" />
+    <None Remove="day1_1\DTOs.json" />
+    <None Remove="day1_2\ARs.json" />
+    <None Remove="day1_2\Best_params.json" />
+    <None Remove="day1_2\constants.json" />
+    <None Remove="day1_2\DTOs.json" />
+    <None Remove="day1_3\ARs.json" />
+    <None Remove="day1_3\constants.json" />
+    <None Remove="day1_3\DTOs.json" />
+    <None Remove="day1_4\ARs.json" />
+    <None Remove="day1_4\constants.json" />
+    <None Remove="day1_4\DTOs.json" />
+    <None Remove="day1_5\ARs.json" />
+    <None Remove="day1_5\constants.json" />
+    <None Remove="day1_5\DTOs.json" />
+    <None Remove="day1_6\ARs.json" />
+    <None Remove="day1_6\constants.json" />
+    <None Remove="day1_6\DTOs.json" />
+    <None Remove="day1_7\ARs.json" />
+    <None Remove="day1_7\constants.json" />
+    <None Remove="day1_7\DTOs.json" />
+    <None Remove="day1_8\ARs.json" />
+    <None Remove="day1_8\constants.json" />
+    <None Remove="day1_8\DTOs.json" />
+    <None Remove="day1_9\ARs.json" />
+    <None Remove="day1_9\constants.json" />
+    <None Remove="day1_9\DTOs.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +49,93 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="day1_0\DTOs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_1\ARs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_1\Best_params.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_1\constants.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_1\DTOs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_2\ARs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_2\Best_params.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_2\constants.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_2\DTOs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_3\ARs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_3\constants.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_3\DTOs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_4\ARs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_4\constants.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_4\DTOs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_5\ARs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_5\constants.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_5\DTOs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_6\ARs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_6\constants.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_6\DTOs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_7\ARs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_7\constants.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_7\DTOs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_8\ARs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_8\constants.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_8\DTOs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_9\ARs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_9\constants.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="day1_9\DTOs.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

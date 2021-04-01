@@ -1,1 +1,116 @@
-{"MEMORY_CAP": 325, "OPERATIVE_PROFILE_CAP": 67, "MISSION_HORIZON_DURATION": 86400, "MAX_INCIDENCE": 40.0, "MIN_INCIDENCE": 20.0, "INCIDENCE_FILTER_IS_NOT_ACTIVE": false, "DLO_FILTER_IS_ACTIVE": true, "PAW_FILTER_IS_ACTIVE": true, "DOWNLINK_RATE": 0.064, "ACQ_TIME_GAP": 10, "STABILIZATION_TIME": 10, "INITIAL_PITCH": 0, "INITIAL_ROLL": 0, "INITIAL_YAW": 0, "PITCH_ANGULAR_VELOCITY": 0.35, "ROLL_ANGULAR_VELOCITY": 0.5, "YAW_ANGULAR_VELOCITY": 0.5, "INITIAL_ROLL_DLO": -30, "FINAL_ROLL_DLO": -30, "ORBIT_PERIOD": 5820, "PAW_INITIAL_PITCH": 0, "PAW_INITIAL_ROLL": -30, "PAW_INITIAL_YAW": 0, "PAW_FINAL_PITCH": 0, "PAW_FINAL_ROLL": -30, "PAW_FINAL_YAW": 0, "memoryFromPreviousPlan": [{"ARID": 1, "memory": 0.66, "rank": 10, "highPriority": false}, {"ARID": 2, "memory": 10.164, "rank": 79, "highPriority": false}, {"ARID": 3, "memory": 12.54, "rank": 98, "highPriority": false}, {"ARID": 4, "memory": 6.468, "rank": 55, "highPriority": false}, {"ARID": 5, "memory": 9.9, "rank": 81, "highPriority": false}, {"ARID": 6, "memory": 6.468, "rank": 56, "highPriority": false}, {"ARID": 7, "memory": 6.6, "rank": 52, "highPriority": false}, {"ARID": 8, "memory": 11.484, "rank": 96, "highPriority": false}, {"ARID": 9, "memory": 1.98, "rank": 16, "highPriority": false}, {"ARID": 10, "memory": 7.656, "rank": 59, "highPriority": false}, {"ARID": 11, "memory": 13.596, "rank": 106, "highPriority": false}, {"ARID": 12, "memory": 2.772, "rank": 25, "highPriority": false}, {"ARID": 13, "memory": 4.884, "rank": 45, "highPriority": false}, {"ARID": 14, "memory": 2.64, "rank": 24, "highPriority": false}], "FINAL_SATELLITE_MEMORY": 0.7}
+{
+  "ACQ_TIME_GAP": 10,
+  "DLO_FILTER_IS_ACTIVE": true,
+  "DOWNLINK_RATE": 0.064,
+  "FINAL_ROLL_DLO": -30,
+  "FINAL_SATELLITE_MEMORY": 0.7,
+  "INCIDENCE_FILTER_IS_NOT_ACTIVE": false,
+  "INITIAL_PITCH": 0,
+  "INITIAL_ROLL": 0,
+  "INITIAL_ROLL_DLO": -30,
+  "INITIAL_YAW": 0,
+  "MAX_INCIDENCE": 40.0,
+  "MEMORY_CAP": 325,
+  "RANK": 3776,
+  "memoryFromPreviousPlan": [
+    {
+      "ARID": 1,
+      "memory": 0.66,
+      "rank": 10,
+      "highPriority": false
+    },
+    {
+      "ARID": 2,
+      "memory": 10.164,
+      "rank": 79,
+      "highPriority": false
+    },
+    {
+      "ARID": 3,
+      "memory": 12.54,
+      "rank": 98,
+      "highPriority": false
+    },
+    {
+      "ARID": 4,
+      "memory": 6.468,
+      "rank": 55,
+      "highPriority": false
+    },
+    {
+      "ARID": 5,
+      "memory": 9.9,
+      "rank": 81,
+      "highPriority": false
+    },
+    {
+      "ARID": 6,
+      "memory": 6.468,
+      "rank": 56,
+      "highPriority": false
+    },
+    {
+      "ARID": 7,
+      "memory": 6.6,
+      "rank": 52,
+      "highPriority": false
+    },
+    {
+      "ARID": 8,
+      "memory": 11.484,
+      "rank": 96,
+      "highPriority": false
+    },
+    {
+      "ARID": 9,
+      "memory": 1.98,
+      "rank": 16,
+      "highPriority": false
+    },
+    {
+      "ARID": 10,
+      "memory": 7.656,
+      "rank": 59,
+      "highPriority": false
+    },
+    {
+      "ARID": 11,
+      "memory": 13.596,
+      "rank": 106,
+      "highPriority": false
+    },
+    {
+      "ARID": 12,
+      "memory": 2.772,
+      "rank": 25,
+      "highPriority": false
+    },
+    {
+      "ARID": 13,
+      "memory": 4.884,
+      "rank": 45,
+      "highPriority": false
+    },
+    {
+      "ARID": 14,
+      "memory": 2.64,
+      "rank": 24,
+      "highPriority": false
+    }
+  ],
+  "MIN_INCIDENCE": 20.0,
+  "MISSION_HORIZON_DURATION": 86400,
+  "OPERATIVE_PROFILE_CAP": 67,
+  "ORBIT_PERIOD": 5820,
+  "PAW_FILTER_IS_ACTIVE": true,
+  "PAW_FINAL_PITCH": 0,
+  "PAW_FINAL_ROLL": -30,
+  "PAW_FINAL_YAW": 0,
+  "PAW_INITIAL_PITCH": 0,
+  "PAW_INITIAL_ROLL": -30,
+  "PAW_INITIAL_YAW": 0,
+  "PITCH_ANGULAR_VELOCITY": 0.35,
+  "ROLL_ANGULAR_VELOCITY": 0.5,
+  "STABILIZATION_TIME": 10,
+  "YAW_ANGULAR_VELOCITY": 0.5
+}

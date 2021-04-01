@@ -110,6 +110,7 @@ namespace SatelliteScheduler
         public int noise { get; set; }
         public double temp { get; set; }
         public int it_max { get; set; }
+        public double max_rank { get; set; }
 
         public Quality(double n_ar, double tot_rank, double memory, double tot_memory)
         {
@@ -119,22 +120,32 @@ namespace SatelliteScheduler
             this.tot_memory = tot_memory;
         }
 
-        public Quality(double n_ar, double tot_rank, double memory, int k, int noise)
+        public Quality(int k, int noise, double n_ar, double tot_rank, double memory)
         {
-            this.n_ar = n_ar;
-            this.tot_rank = tot_rank;
-            this.memory = memory;
             this.k = k;
             this.noise = noise;
-        }
-
-        public Quality(double n_ar, double tot_rank, double memory, double temp, int it_max)
-        {
             this.n_ar = n_ar;
             this.tot_rank = tot_rank;
             this.memory = memory;
+        }
+
+        public Quality(double temp, int it_max, double n_ar, double tot_rank, double memory)
+        {
             this.temp = temp;
             this.it_max = it_max;
+            this.n_ar = n_ar;
+            this.tot_rank = tot_rank;
+            this.memory = memory;
+        }
+
+        public void SetMaxRank(double value)
+        {
+            max_rank = value;
+        }
+
+        public double GetGap()
+        {
+            return Math.Round(100 - (100 * tot_rank) / max_rank, 3);
         }
 
         public string WriteQuality()
@@ -145,20 +156,20 @@ namespace SatelliteScheduler
         public void PrintQuality()
         {
             Console.WriteLine("Acquisizioni: " + n_ar);
-            Console.WriteLine("Rank: " + tot_rank);
+            Console.WriteLine("Rank: " + tot_rank + " (" + GetGap() + ")");
             Console.WriteLine("Memoria usata: " + memory + " su " + tot_memory + " GB");
         }
 
         public void PrintQualityRR()
         {
             Console.WriteLine(k.ToString() + "\t" + noise + "\t" + n_ar + "\t" 
-                + tot_rank + "\t" + memory);
+                + tot_rank + " (" + GetGap() + ")" +"\t" + memory);
         }
 
         public void PrintQualitySA()
         {
             Console.WriteLine(temp + "\t" + it_max + "\t" + n_ar + "\t" 
-                + tot_rank + "\t" + memory);
+                + tot_rank + " (" + GetGap() + ")" + "\t" + memory);
         }
     }
 }
