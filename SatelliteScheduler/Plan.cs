@@ -14,7 +14,7 @@ namespace SatelliteScheduler
         public Plan(Instance instance)
         {
             this.instance = instance;
-            this.plan = new List<ARDTO>();
+            plan = new List<ARDTO>();
             current_mem = 0;
         }
 
@@ -45,7 +45,9 @@ namespace SatelliteScheduler
             }
             //Console.WriteLine("id_ar\t\tid_dto\t\trank\thigh\tstart\t\t\tstop\t\t\tmemory");
 
-            for (; i < instance.GetARDTOs().Count; i++)
+            int n = instance.GetARDTOs().Count;
+
+            for (; i < n; i++)
             {
                 ARDTO newArdto = instance.GetARDTO(i);
                 ok = true;
@@ -96,80 +98,9 @@ namespace SatelliteScheduler
         {
             double rank = plan.Select(x => x.rank).Sum();
             double mem = Math.Round(plan.Select(x => x.memory).Sum(), 2);
-            return new Quality(plan.Count, rank, mem, instance.GetMaxMem());
+            return new Quality(plan.Count, rank, mem, instance.GetMaxMem(), instance.GetMaxRank());
         }
     }
 
-    public class Quality
-    {
-        public double n_ar { get; set; }
-        public double tot_rank { get; set; }
-        public double memory { get; set; }
-        public double tot_memory { get; set; }
-        public int k { get; set; }
-        public int noise { get; set; }
-        public double temp { get; set; }
-        public int it_max { get; set; }
-        public double max_rank { get; set; }
 
-        public Quality(double n_ar, double tot_rank, double memory, double tot_memory)
-        {
-            this.n_ar = n_ar;
-            this.tot_rank = tot_rank;
-            this.memory = memory;
-            this.tot_memory = tot_memory;
-        }
-
-        public Quality(int k, int noise, double n_ar, double tot_rank, double memory)
-        {
-            this.k = k;
-            this.noise = noise;
-            this.n_ar = n_ar;
-            this.tot_rank = tot_rank;
-            this.memory = memory;
-        }
-
-        public Quality(double temp, int it_max, double n_ar, double tot_rank, double memory)
-        {
-            this.temp = temp;
-            this.it_max = it_max;
-            this.n_ar = n_ar;
-            this.tot_rank = tot_rank;
-            this.memory = memory;
-        }
-
-        public void SetMaxRank(double value)
-        {
-            max_rank = value;
-        }
-
-        public double GetGap()
-        {
-            return Math.Round(100 - (100 * tot_rank) / max_rank, 3);
-        }
-
-        public string WriteQuality()
-        {
-            return n_ar + "," + tot_rank + "," + memory;
-        }
-
-        public void PrintQuality()
-        {
-            Console.WriteLine("Acquisizioni: " + n_ar);
-            Console.WriteLine("Rank: " + tot_rank + " (" + GetGap() + ")");
-            Console.WriteLine("Memoria usata: " + memory + " su " + tot_memory + " GB");
-        }
-
-        public void PrintQualityRR()
-        {
-            Console.WriteLine(k.ToString() + "\t" + noise + "\t" + n_ar + "\t" 
-                + tot_rank + " (" + GetGap() + ")" +"\t" + memory);
-        }
-
-        public void PrintQualitySA()
-        {
-            Console.WriteLine(temp + "\t" + it_max + "\t" + n_ar + "\t" 
-                + tot_rank + " (" + GetGap() + ")" + "\t" + memory);
-        }
-    }
 }

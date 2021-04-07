@@ -7,22 +7,22 @@ namespace SatelliteScheduler
     class Program
     {
         //public static double max_mem;
-        public static int seed = 0;
+        public static int seed = 4;
         public static int k_ruin = 7;
-        public static int noise = 1;
+        public static int noise = 4;
         public static double t_max = 0.0001;
         public static int max_it = 1000;
 
         static void Main(string[] args)
         {
             Console.WriteLine("***************************************");
-            //Console.WriteLine("Configurazione: " + string.Join(",", args));
-            //SetParams(args);
 
             Instance[] instance = new Instance[5];
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 5; i < 10; i++)
             {
+                Console.WriteLine("\nTuning su istanza " + (i+1) + "\n");
+
                 args = new string[] { "0", "0", "0", "0", "0" };
                 args[0] = Environment.CurrentDirectory + @"\day1_" + i + "\\";
 
@@ -31,19 +31,12 @@ namespace SatelliteScheduler
                 string consts = System.IO.File.ReadAllText(args[0] + "constants.json");
 
                 instance[i] = new Instance(ars, dtos, consts, seed);
+
+                //Tester T = new Tester(instance[i], i);
                 GeneratePlans(instance[i]);
+
             }
         }
-
-        //private static void SetParams(string[] args)
-        //{
-        //    bool res;
-        //    res = int.TryParse(args[1], out seed);
-        //    res = int.TryParse(args[2], out k_ruin);
-        //    res = int.TryParse(args[3], out noise);
-        //    res = double.TryParse(args[4], out t_max);
-        //}
-
         // Genera 4 piani ordinati per: memoria, rank, rank/memoria, rank/memoria disturbato
         public static void GeneratePlans(Instance instance)
         {

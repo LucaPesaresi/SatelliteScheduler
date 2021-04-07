@@ -82,5 +82,10 @@ namespace SatelliteScheduler
             return rnd;
         }
 
+        public void SetRandom(int seed)
+        {
+            rnd = new Random(seed);
+        }
+
     }
 }

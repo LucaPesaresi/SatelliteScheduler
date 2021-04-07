@@ -25,7 +25,6 @@ namespace SatelliteScheduler
                     best_plan = Plan.Copy(candidate_plan);
                 }
             }
-
             return best_plan;
         }
 
