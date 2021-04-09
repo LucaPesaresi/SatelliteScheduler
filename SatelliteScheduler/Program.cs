@@ -17,11 +17,11 @@ namespace SatelliteScheduler
         {
             Console.WriteLine("***************************************");
 
-            Instance[] instance = new Instance[5];
+            Instance[] instances = new Instance[5];
 
-            for (int i = 5; i < 10; i++)
+            for (int i = 0; i < 5; i++)
             {
-                Console.WriteLine("\nTuning su istanza " + (i+1) + "\n");
+                //Console.WriteLine("\nTuning su istanza " + (i+1) + "\n");
 
                 args = new string[] { "0", "0", "0", "0", "0" };
                 args[0] = Environment.CurrentDirectory + @"\day1_" + i + "\\";
@@ -30,12 +30,15 @@ namespace SatelliteScheduler
                 string dtos = System.IO.File.ReadAllText(args[0] + "DTOs.json");
                 string consts = System.IO.File.ReadAllText(args[0] + "constants.json");
 
-                instance[i] = new Instance(ars, dtos, consts, seed);
+                instances[i] = new Instance(ars, dtos, consts, seed);
 
                 //Tester T = new Tester(instance[i], i);
-                GeneratePlans(instance[i]);
-
+                //GeneratePlans(instances[i]);
             }
+
+            Tuner T = new Tuner(instances);
+            T.BuildRR(10, 30, 3, 10, 30, 3);
+            T.TuningSA(0.00001, 1, 10);
         }
         // Genera 4 piani ordinati per: memoria, rank, rank/memoria, rank/memoria disturbato
         public static void GeneratePlans(Instance instance)
@@ -77,10 +80,6 @@ namespace SatelliteScheduler
             //watch.Stop();
             //elapsedMs = watch.ElapsedMilliseconds;
             //Console.WriteLine("Tempo: " + elapsedMs + " ms");
-
-            Tuner T = new Tuner(instance, plan_noisyrankmem);
-            T.BuildRR(1, 50, 3, 1, 50, 3);
-            T.TuningSA(0.00001, 1, 10);
         }
 
         //Apllica l'algoritmo Ruin&Recreate per ottenere un'ipotetica soluzione migliore
