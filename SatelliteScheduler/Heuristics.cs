@@ -5,9 +5,8 @@ namespace SatelliteScheduler
 {
     class Heuristics
     {
-
-        public static Plan CreateInitialPlan(Instance instance, double noise, int max_it) {
-
+        public static Plan CreateInitialPlan(Instance instance, double noise, int max_it)
+        {
             Plan best_plan = new Plan(instance);
             instance.SetRandomNoiseAndSortARDTOs(noise);
             best_plan.BuildPlan();
@@ -36,7 +35,6 @@ namespace SatelliteScheduler
             {
                 plan.RemoveAt(instance.GetRandom().Next(0, plan.GetPlan().Count));
             }
-
             return plan;
         }
 
@@ -57,9 +55,6 @@ namespace SatelliteScheduler
             if (star_obj > best_obj)
             {
                 P = Plan.Copy(P_star);
-                //Console.WriteLine("--------------------------------");
-                //Console.WriteLine("Il nuovo piano risulta migliore");
-                //P.QualityPlan().PrintQuality();
             }
             return P;
         }
@@ -75,9 +70,6 @@ namespace SatelliteScheduler
             if (neigh_obj > best_obj)
             {
                 plans.Add(Plan.Copy(P_neigh));
-                //Console.WriteLine("Il nuovo piano risulta migliore");
-                //P_neigh.QualityPlan().PrintQuality();
-                //Console.WriteLine("--------------------------------");
             }
             else
             {
@@ -93,7 +85,6 @@ namespace SatelliteScheduler
             {
                 plans.Add(null);
             }
-
             return plans;
         }
     }

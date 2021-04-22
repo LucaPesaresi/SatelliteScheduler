@@ -11,12 +11,11 @@ namespace SatelliteScheduler
         public static int k_ruin = 7;
         public static int noise = 4;
         public static double t_max = 0.0001;
-        public static int max_it = 1000;
+        public static int max_it = 100;
 
         static void Main(string[] args)
         {
             Console.WriteLine("***************************************");
-
             Instance[] instances = new Instance[5];
 
             for (int i = 0; i < 5; i++)
@@ -31,15 +30,31 @@ namespace SatelliteScheduler
                 string consts = System.IO.File.ReadAllText(args[0] + "constants.json");
 
                 instances[i] = new Instance(ars, dtos, consts, seed);
-
-                //Tester T = new Tester(instance[i], i);
                 //GeneratePlans(instances[i]);
             }
 
             Tuner T = new Tuner(instances);
-            T.BuildRR(10, 30, 3, 10, 30, 3);
-            T.TuningSA(0.00001, 1, 10);
+            T.BuildTuning(0, 10, 30, 3, 10, 30, 3);
+            T.BuildTuning(1, 10, 30, 3, 10, 30, 3);
+
+            //Tuner T = new Tuner(instances);
+            //Console.WriteLine("R&R");
+            //k_ruin = 18; noise = 8;
+            //var watch = Stopwatch.StartNew();
+            //double gap = T.MediumQuality(0, k_ruin, noise, max_it);
+            //watch.Stop();
+            //long time_elapsed = watch.ElapsedMilliseconds;
+            //Console.WriteLine("Nuovo gap: " + gap + "%  " + k_ruin + " " + noise + " " + time_elapsed);
+
+            //Console.WriteLine("\nSA");
+            //k_ruin = 10; noise = 10;
+            //watch = Stopwatch.StartNew();
+            //gap = T.MediumQuality(1, k_ruin, noise, max_it);
+            //watch.Stop();
+            //time_elapsed = watch.ElapsedMilliseconds;
+            //Console.WriteLine("Nuovo gap: " + gap + "%  " + k_ruin + " " + noise + " " + time_elapsed);
         }
+
         // Genera 4 piani ordinati per: memoria, rank, rank/memoria, rank/memoria disturbato
         public static void GeneratePlans(Instance instance)
         {
