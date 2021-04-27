@@ -7,7 +7,7 @@ namespace SatelliteScheduler
     class Program
     {
         //public static double max_mem;
-        public static int seed = 4;
+        public static int seed = 0;
         public static int k_ruin = 7;
         public static int noise = 4;
         public static double t_max = 0.0001;
