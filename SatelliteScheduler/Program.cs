@@ -7,11 +7,11 @@ namespace SatelliteScheduler
     class Program
     {
         //public static double max_mem;
-        public static int seed = 4;
+        public static int seed = 0;
         public static int k_ruin = 7;
         public static int noise = 4;
         public static double t_max = 0.0001;
-        public static int max_it = 100;
+        public static int max_it = 500;
 
         static void Main(string[] args)
         {
@@ -33,26 +33,27 @@ namespace SatelliteScheduler
                 //GeneratePlans(instances[i]);
             }
 
-            Tuner T = new Tuner(instances);
-            T.BuildTuning(0, 10, 30, 3, 10, 30, 3);
-            T.BuildTuning(1, 10, 30, 3, 10, 30, 3);
-
             //Tuner T = new Tuner(instances);
-            //Console.WriteLine("R&R");
-            //k_ruin = 18; noise = 8;
-            //var watch = Stopwatch.StartNew();
-            //double gap = T.MediumQuality(0, k_ruin, noise, max_it);
-            //watch.Stop();
-            //long time_elapsed = watch.ElapsedMilliseconds;
-            //Console.WriteLine("Nuovo gap: " + gap + "%  " + k_ruin + " " + noise + " " + time_elapsed);
+            //T.BuildTuning(0, 10, 30, 3, 10, 30, 3);
+            //T.BuildTuning(1, 10, 30, 3, 10, 30, 3);
 
-            //Console.WriteLine("\nSA");
+            Tuner T = new Tuner(instances);
+            Console.WriteLine("R&R");
+            //k_ruin = 18; noise = 8;
+            k_ruin = 12; noise = 10;
+
+            double[] q = T.MediumQuality(0, k_ruin, noise, max_it);
+            //double gap = q[0];
+            //double time = q[1];
+            Console.WriteLine("Nuovo gap: " + q[0]  + " " + q[1] + " " + q[2] + " " + k_ruin + " " + noise + " " + q[3]);
+
+            Console.WriteLine("\nSA");
             //k_ruin = 10; noise = 10;
-            //watch = Stopwatch.StartNew();
-            //gap = T.MediumQuality(1, k_ruin, noise, max_it);
-            //watch.Stop();
-            //time_elapsed = watch.ElapsedMilliseconds;
-            //Console.WriteLine("Nuovo gap: " + gap + "%  " + k_ruin + " " + noise + " " + time_elapsed);
+            k_ruin = 18; noise = 8;
+            q = T.MediumQuality(1, k_ruin, noise, max_it);
+            //gap = q[0];
+            //time = q[1];
+            Console.WriteLine("Nuovo gap: " + q[0] + " " + q[1] + " " + q[2] + " " + k_ruin + " " + noise + " " + q[3]);
         }
 
         // Genera 4 piani ordinati per: memoria, rank, rank/memoria, rank/memoria disturbato

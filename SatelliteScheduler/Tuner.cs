@@ -10,8 +10,9 @@ namespace SatelliteScheduler
     {
         int k_start, k_stop, k_inc, k_step, k_best;
         int noise_start, noise_stop, noise_inc, noise_step, noise_best;
-        double best_gap;
+        double best_gap, time_best;
         readonly Instance[] instances;
+        string line;
 
         public Tuner(Instance[] instances)
         {
@@ -40,58 +41,81 @@ namespace SatelliteScheduler
                 Tuning(H);
                 SetBestParams();
             }
+            Writer(H + "-opt.txt", line);
         }
 
         public void Tuning(int H)
         {
-            string line;
             for (int k = k_start, i=1; k <= k_stop; k = k_start + (k_inc * i), i++)
             {
                 for (int noise = noise_start, j = 1; noise <= noise_stop; noise = noise_start + (noise_inc * j), j++)
                 {
-                    double new_gap = MediumQuality(H, k, noise);
-                    
+                    double[] quality = MediumQuality(H, k, noise);
+                    double new_gap = quality[0];
+                    //double low_gap = quality[1];
+                    //double high_gap = quality[2];
+                    //double time = quality[3];
+
                     if (new_gap <= best_gap)
                     {
                         best_gap = new_gap;
                         k_best = k;
                         noise_best = noise;
+                        //time_best = time;
                     }
-                    line = "Nuovo gap: " + new_gap + "%  " + k + " " + noise;
+                    line = "Nuovo gap: " + new_gap + "%  " + k + " " + noise /* +" " + time*/;
                     Console.WriteLine(line);
                     //Writer("RR-opt.txt", line);
                 }
             }
-            line = "Migliore: " + best_gap + "%  " + k_best + " " + noise_best;
+            line = "Migliore: " + best_gap + "%  " + k_best + " " + noise_best /*+ " " + time_best*/;
             Console.Write(line);
-            Writer(H +"-opt.txt", line);
+            
         }
 
-        public double MediumQuality(int H, int k, int noise, int max_it=100)
+        public double[] MediumQuality(int H, int k, int noise, int max_it = 100)
         {
+            double[] ranks = new double[5];
             double[] gaps = new double[instances.Length];
             int max_run = 5;
-            int c = 0;
+            double[] times = new double[25];
+            int c = 2;
+            int j = 0;
             //ciclo delle istanze
-            foreach (var inst in instances)
+            //foreach (var inst in instances)
+            //{
+            List<Plan> Plist = new List<Plan>();
+            for (int i = 0; i < max_run; i++)
             {
-                List<Plan> Plist = new List<Plan>();            
-                for (int i = 0; i < max_run; i++)
+                for (int s = 0; s < 5; s++, j++)
                 {
+                    instances[c].SetRandom(s);
+                    var watch = Stopwatch.StartNew();
+
                     if (H == 0)
                     {
-                        Plist.Add(RuinRecreate(inst, k, noise, max_it));
+                        Plist.Add(RuinRecreate(instances[c], k, noise, max_it));
                     }
                     else
                     {
-                        Plist.Add(SA(inst, k, noise, 0.01, max_it));
+                        Plist.Add(SA(instances[c], k, noise, 0.01, max_it));
                     }
+
+                    watch.Stop();
+                    times[j] = Convert.ToDouble(watch.ElapsedMilliseconds);
                 }
-                double tot_rank = Math.Round(Plist.Select(p => p.QualityPlan().tot_rank).Average(), 2);
-                gaps[c] = GetGap(tot_rank, inst.GetMaxRank());
-                c++;
             }
-            return gaps.Average();
+            double tot_rank = Math.Round(Plist.Select(p => p.QualityPlan().tot_rank).Average(), 2);
+            double min_rank = Plist.Select(p => p.QualityPlan().tot_rank).Min();
+            double max_rank = Plist.Select(p => p.QualityPlan().tot_rank).Max();
+
+            gaps[0] = GetGap(max_rank, instances[c].GetMaxRank());
+            gaps[1] = GetGap(tot_rank, instances[c].GetMaxRank());
+            gaps[2] = GetGap(min_rank, instances[c].GetMaxRank());
+            gaps[3] = times.Average();
+            c++;
+            //}
+            return gaps/*.Average()*/;
         }
 
         public double GetGap(double tot_rank, double max_rank)
