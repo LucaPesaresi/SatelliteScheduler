@@ -41,18 +41,13 @@ namespace SatelliteScheduler
             Console.WriteLine("R&R");
             //k_ruin = 18; noise = 8;
             k_ruin = 12; noise = 10;
-
             double[] q = T.MediumQuality(0, k_ruin, noise, max_it);
-            //double gap = q[0];
-            //double time = q[1];
             Console.WriteLine("Nuovo gap: " + q[0]  + " " + q[1] + " " + q[2] + " " + k_ruin + " " + noise + " " + q[3]);
 
             Console.WriteLine("\nSA");
             //k_ruin = 10; noise = 10;
             k_ruin = 18; noise = 8;
             q = T.MediumQuality(1, k_ruin, noise, max_it);
-            //gap = q[0];
-            //time = q[1];
             Console.WriteLine("Nuovo gap: " + q[0] + " " + q[1] + " " + q[2] + " " + k_ruin + " " + noise + " " + q[3]);
         }
 
