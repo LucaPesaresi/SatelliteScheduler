@@ -69,9 +69,9 @@ namespace SatelliteScheduler
 
         public double[] MediumQuality(int H, int k, int noise, int max_it=100)
         {
-            double[] gaps = new double[instances.Length];
+            double[]   gaps = new double[instances.Length];
             int max_run = 5;
-            int c = 0;
+            int c = 2;
             int j = 0;
             //ciclo delle istanze
             //foreach (var inst in instances)
@@ -96,13 +96,15 @@ namespace SatelliteScheduler
                 }
             }
 
-            double max_rank = Plist.Select(p => p.QualityPlan().tot_rank).Max();
+            //double max_rank = Plist.Select(p => p.QualityPlan().tot_rank).Max();
             double tot_rank = Math.Round(Plist.Select(p => p.QualityPlan().tot_rank).Average(), 2);
-            double min_rank = Plist.Select(p => p.QualityPlan().tot_rank).Min();
+            //double min_rank = Plist.Select(p => p.QualityPlan().tot_rank).Min();
+            double n_ar = Math.Round(Plist.Select(p => p.QualityPlan().n_ar).Average(), 2);
+            double mem = Math.Round(Plist.Select(p => p.QualityPlan().memory).Average(), 2);
 
-            gaps[0] = GetGap(max_rank, instances[c].GetMaxRank());
-            gaps[1] = GetGap(tot_rank, instances[c].GetMaxRank());
-            gaps[2] = GetGap(min_rank, instances[c].GetMaxRank());
+            gaps[0] = GetGap(tot_rank, instances[c].GetMaxRank());
+            gaps[1] = GetGap(n_ar, instances[c].GetMaxRank());
+            gaps[2] = GetGap(mem, instances[c].GetMaxRank());
             gaps[3] = times.Average();
             //c++;
             //}

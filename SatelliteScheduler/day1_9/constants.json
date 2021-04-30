@@ -1,1 +1,74 @@
-{"MEMORY_CAP": 298, "OPERATIVE_PROFILE_CAP": 33, "MISSION_HORIZON_DURATION": 86400, "MAX_INCIDENCE": 40.0, "MIN_INCIDENCE": 20.0, "INCIDENCE_FILTER_IS_NOT_ACTIVE": false, "DLO_FILTER_IS_ACTIVE": true, "PAW_FILTER_IS_ACTIVE": true, "DOWNLINK_RATE": 0.064, "ACQ_TIME_GAP": 10, "STABILIZATION_TIME": 10, "INITIAL_PITCH": 0, "INITIAL_ROLL": 0, "INITIAL_YAW": 0, "PITCH_ANGULAR_VELOCITY": 0.35, "ROLL_ANGULAR_VELOCITY": 0.5, "YAW_ANGULAR_VELOCITY": 0.5, "INITIAL_ROLL_DLO": -30, "FINAL_ROLL_DLO": -30, "ORBIT_PERIOD": 5820, "PAW_INITIAL_PITCH": 0, "PAW_INITIAL_ROLL": -30, "PAW_INITIAL_YAW": 0, "PAW_FINAL_PITCH": 0, "PAW_FINAL_ROLL": -30, "PAW_FINAL_YAW": 0, "memoryFromPreviousPlan": [{"ARID": 1, "memory": 8.712, "rank": 70, "highPriority": false}, {"ARID": 2, "memory": 13.992, "rank": 109, "highPriority": false}, {"ARID": 3, "memory": 15.18, "rank": 117, "highPriority": false}, {"ARID": 4, "memory": 11.484, "rank": 90, "highPriority": false}, {"ARID": 5, "memory": 11.484, "rank": 95, "highPriority": false}, {"ARID": 6, "memory": 10.164, "rank": 81, "highPriority": false}, {"ARID": 7, "memory": 11.616, "rank": 99, "highPriority": false}], "FINAL_SATELLITE_MEMORY": 0.28}
+{
+  "MEMORY_CAP": 298,
+  "RANK":  10964,
+  "OPERATIVE_PROFILE_CAP": 33,
+  "MISSION_HORIZON_DURATION": 86400,
+  "MAX_INCIDENCE": 40.0,
+  "MIN_INCIDENCE": 20.0,
+  "INCIDENCE_FILTER_IS_NOT_ACTIVE": false,
+  "DLO_FILTER_IS_ACTIVE": true,
+  "PAW_FILTER_IS_ACTIVE": true,
+  "DOWNLINK_RATE": 0.064,
+  "ACQ_TIME_GAP": 10,
+  "STABILIZATION_TIME": 10,
+  "INITIAL_PITCH": 0,
+  "INITIAL_ROLL": 0,
+  "INITIAL_YAW": 0,
+  "PITCH_ANGULAR_VELOCITY": 0.35,
+  "ROLL_ANGULAR_VELOCITY": 0.5,
+  "YAW_ANGULAR_VELOCITY": 0.5,
+  "INITIAL_ROLL_DLO": -30,
+  "FINAL_ROLL_DLO": -30,
+  "ORBIT_PERIOD": 5820,
+  "PAW_INITIAL_PITCH": 0,
+  "PAW_INITIAL_ROLL": -30,
+  "PAW_INITIAL_YAW": 0,
+  "PAW_FINAL_PITCH": 0,
+  "PAW_FINAL_ROLL": -30,
+  "PAW_FINAL_YAW": 0,
+  "memoryFromPreviousPlan": [
+    {
+      "ARID": 1,
+      "memory": 8.712,
+      "rank": 70,
+      "highPriority": false
+    },
+    {
+      "ARID": 2,
+      "memory": 13.992,
+      "rank": 109,
+      "highPriority": false
+    },
+    {
+      "ARID": 3,
+      "memory": 15.18,
+      "rank": 117,
+      "highPriority": false
+    },
+    {
+      "ARID": 4,
+      "memory": 11.484,
+      "rank": 90,
+      "highPriority": false
+    },
+    {
+      "ARID": 5,
+      "memory": 11.484,
+      "rank": 95,
+      "highPriority": false
+    },
+    {
+      "ARID": 6,
+      "memory": 10.164,
+      "rank": 81,
+      "highPriority": false
+    },
+    {
+      "ARID": 7,
+      "memory": 11.616,
+      "rank": 99,
+      "highPriority": false
+    }
+  ],
+  "FINAL_SATELLITE_MEMORY": 0.28
+}
